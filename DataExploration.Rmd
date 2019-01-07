@@ -53,4 +53,20 @@ FertDf <- read.csv(file = "Datasets/fertility.csv", header = TRUE, sep =",")
 
 All datasets have been uploaded as dataframes start data exploration
 
+```{r data exploration BCDf}
+# show number of columns and rows for BCFf
+cat("Shape of BCDf is: ", dim(BCDf))
+head(BCDf)
+summary(BCDf)
+colnames(BCDf)
+
+# show class distribution
+BCCounts <- table(BCDf$diagnosis)
+barplot(BCCounts, main="Breast Cancer Diagnosis Distribution", 
+   xlab="Diagnostic")
+
+# show distribution of each mean column
+BCAreaMCounts <- density(BCDf$area_mean)
+plot(BCAreaMCounts, main = "Distribution of the values for area (mean)", xlab ="area values")
+```
 
