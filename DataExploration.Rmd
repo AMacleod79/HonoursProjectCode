@@ -1,5 +1,5 @@
 ---
-title: "R Notebook"
+title: "Data Exploration"
 output: html_notebook
 ---
 
@@ -7,10 +7,50 @@ This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute
 
 Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
 
-```{r}
-plot(cars)
-```
+
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
 
 When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file).
+
+```{r get working directory}
+#set working directory
+getwd()
+list.files()
+```
+```{r upload datasets}
+# upload datasets to the notebook as dataframes
+# upload diabetes breast cancer dataset
+BCDf <- read.csv(file = "Datasets/BreastCancerData.csv", header=TRUE, sep=",")
+
+# upload the liver dataset
+LiverDf <- read.csv(file = "Datasets/IndianLiver.csv", header = TRUE, sep=",")
+
+# upload the alzeihmers dataset
+AlzDf <- read.csv(file =  "Datasets/alzheimerLongitudinal.csv", header = TRUE, sep=",")
+
+# upload the pima indian diabetes dataset
+DiabetesDf <- read.csv(file = "Datasets/diabetes.csv", header = TRUE, sep=",")
+
+# upload the cervical cancer risk classification 
+CCDf <- read.csv(file="Datasets/kag_risk_factors_cervical_cancer.csv", header = TRUE, sep=",")
+
+# upload the Lower back pain symptom dataset
+LBPDf <- read.csv(file = "Datasets/dataset_spine.csv", header = TRUE, sep=",")
+
+# upload the Heart Attack prediction dataset
+HAPDf <- read.csv(file = "Datasets/HeartAttackData.csv", header = TRUE, sep=",")
+
+# upload the  autism screening dataset
+AuSDf <- read.csv(file = "Datasets/Autism_data.csv", header = TRUE, sep= ",")
+
+# upload the fertility dataset
+FertDf <- read.csv(file = "Datasets/fertility.csv", header = TRUE, sep =",")
+
+
+```
+
+
+All datasets have been uploaded as dataframes start data exploration
+
+
