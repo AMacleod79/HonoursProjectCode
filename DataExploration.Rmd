@@ -27,7 +27,7 @@ BCDf <- read.csv(file = "Datasets/BreastCancerData.csv", header=TRUE, sep=",")
 LiverDf <- read.csv(file = "Datasets/IndianLiver.csv", header = TRUE, sep=",")
 
 # upload the alzeihmers dataset
-AlzDf <- read.csv(file =  "Datasets/alzheimerLongitudinal.csv", header = TRUE, sep=",")
+AlzDf <- read.csv(file =  "Datasets/alzeihmerLongitudinal.csv", header = TRUE, sep=",")
 
 # upload the pima indian diabetes dataset
 DiabetesDf <- read.csv(file = "Datasets/diabetes.csv", header = TRUE, sep=",")
@@ -60,13 +60,64 @@ head(BCDf)
 summary(BCDf)
 colnames(BCDf)
 
-# show class distribution
+#class labels are B and M - Let's recode to 0 and 1
+levels(BCDf$diagnosis)[1] <-0
+levels(BCDf$diagnosis)[2] <-1
+levels(BCDf$diagnosis)
+
+head(BCDf)
+
+# class distribution
 BCCounts <- table(BCDf$diagnosis)
-barplot(BCCounts, main="Breast Cancer Diagnosis Distribution", 
-   xlab="Diagnostic")
 
 # show distribution of each mean column
 BCAreaMCounts <- density(BCDf$area_mean)
 plot(BCAreaMCounts, main = "Distribution of the values for area (mean)", xlab ="area values")
+```
+
+```{r Indian Liver Patient }
+cat("Shape of LiverDf is: ", dim(LiverDf))
+head(LiverDf)
+summary(LiverDf)
+colnames(LiverDf)
+
+#class distribution
+# for this dataset label is 1 (no liver disease) and 2 (liver disease)
+#so first change all the 1 to 0 and 2 to 1 so all the datasets are the same
+LiverDf$Dataset[LiverDf$Dataset==1]<-0
+LiverDf$Dataset[LiverDf$Dataset==2]<-1
+head(LiverDf)
+LiverDfCounts <- table(LiverDf$Dataset)
+
+```
+
+```{r Alzheimer Dataset}
+cat("Shape of AlzDf is: ", dim(AlzDf))
+head(AlzDf)
+summary(AlzDf)
+colnames(AlzDf)
+
+#class distribution
+# for this dataset label is Demented, converted or nondemented 
+#so first change all to 0(non demented) and 1 (converted) and 2(demented) so all the datasets are the same
+levels(AlzDf$Group)
+levels(AlzDf$Group)[1]<-1
+levels(AlzDf$Group)[2]<-2
+levels(AlzDf$Group)[3]<-0
+levels(AlzDf$Group)
+
+AlzDfCount <- table(AlzDf$Group)
+
+```
+
+```{r Pima Indian Diabetes Dataset}
+cat("Shape of DiabetesDf is: ", dim(DiabetesDf))
+head(DiabetesDf)
+summary(DiabetesDf)
+colnames(DiabetesDf)
+
+#class distribution
+#outcome is already 1(develop diabetes within 5 years) or 0 (will not develop diabetes within 5 years) so no need to recode
+DiabetesDfCount <-table(DiabetesDf$Outcome)
 ```
 
