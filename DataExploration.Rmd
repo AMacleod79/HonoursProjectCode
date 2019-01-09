@@ -187,8 +187,93 @@ min(HAPDf$num)
 
 # max and min of num column are 1 and O so looks like the diagnostic is binary after all.
 
+#class distribution
+HAPDfCount <- table(HAPDf$num)
+```
 
+```{r Autism screening}
+cat("Shape of AuSDf is: ", dim(AuSDf))
+head(AuSDf)
+summary(AuSDf)
+colnames(AuSDf)
+
+#notes on column
+#the "autism" column (column 15) refers to whether or not a family member has PDD or not
+# the result (column 18) is an integer score from the diagnostic
+#the label in this case is the last column Class.ASD
+
+levels(AuSDf$Class.ASD)
+#levels are NO and Yes, let's convert this to 0 for No and 1 for yes
+levels(AuSDf$Class.ASD)[1] <-0
+levels(AuSDf$Class.ASD)[2]<-1
+levels(AuSDf$Class.ASD)
+
+#class distribution
+AuSDfCount <- table(AuSDf$Class.ASD)
+```
+
+```{r Fertility Dataset}
+cat("Shape of FertDf is: ", dim(FertDf))
+head(FertDf)
+summary(FertDf)
+colnames(FertDf)
+
+#levels in class labels
+levels(FertDf$Diagnosis)
+#change levels to 0 for Normal and 1 for Altered
+levels(FertDf$Diagnosis)[1] <- 1
+levels(FertDf$Diagnosis)[2] <- 0
+levels(FertDf$Diagnosis)
+
+#class distribution
+FertDfCount <- table(FertDf$Diagnosis)
+```
+
+All of the datasets have been uploaded and processed so as to have numeric class labels
+Let's now display the class distribution on a graph 
+
+```{r}
+#class distribution of all datasets
+#create a 3x3 array
+par(mfrow=c(3,3))
+barplot(BCCounts, col=c("blue"),
+        xlab = "Breast Cancer Diagnosis Distribution",
+        ylab = "Frequency",
+        main = "A")
+barplot(LiverDfCounts, col=c("blue"),
+        xlab = "Indian Liver Disease Distribution",
+        ylab = "Frequency",
+        main = "B")
+barplot(AlzDfCount, col=c("blue"),
+        xlab = "Alzheimer Prediction Disitribution",
+        ylab = "Frequency",
+        main = "C")
+barplot(DiabetesDfCount, col=c("blue"),
+        xlab = "Pima Indian Diabetes Distribution",
+        ylab = "Frequency",
+        main = "D")
+barplot(table(CCDf$Biopsy), col=c("blue"), #using biopsy column for now
+        xlab = "Cervical cancer diagnosis distribution",
+        ylab = "Frequency",
+        main = "E")
+barplot(LBPDfCount, col=c("blue"),
+        xlab = "Lower Back Pain Diagnostic Distribution",
+        ylab = "Frequency",
+        main = "F")
+barplot(HAPDfCount, col=c("blue"),
+        xlab = "Heart Disease Diagnostic Distribution",
+        ylab = "Frequency",
+        main = "G")
+barplot(AuSDfCount, col=c("blue"),
+        xlab = "Autism Diagnostic Distribution",
+        ylab = "Frequency",
+        main = "H")
+barplot(FertDfCount, col=c("blue"),
+        xlab = "Fertility Diagnsotic Distribution",
+        ylab = "Frequency",
+        main = "I")
 
 
 ```
+
 
