@@ -172,3 +172,23 @@ levels(LBPDf$Class_label)
 LBPDfCount <- table(LBPDf$Class_label)
 ```
 
+
+```{r Heart Attack dataset}
+cat("Shape of HAPDf is: ", dim(HAPDf))
+head(HAPDf)
+summary(HAPDf)
+colnames(HAPDf)
+
+# this appears to contain only the hungarian database (number of rows)
+#class labels is expressed as 0 (no heart disease) or 1 -4 (heart disease ) in the num column
+#found UCI document that explains the 1-4 a bit though still not clear on the cutoff and actual significance. Original database was only 1-0 but some of it looks corrupted?
+max(HAPDf$num)
+min(HAPDf$num)
+
+# max and min of num column are 1 and O so looks like the diagnostic is binary after all.
+
+
+
+
+```
+
