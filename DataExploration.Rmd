@@ -73,6 +73,195 @@ BCCounts <- table(BCDf$diagnosis)
 # show distribution of each mean column
 BCAreaMCounts <- density(BCDf$area_mean)
 plot(BCAreaMCounts, main = "Distribution of the values for area (mean)", xlab ="area values")
+
+#scatter plot matrices
+# Scatterplot Matrices from the glus Package 
+library(gclus)
+plotData <- BCDf[c(3, 4, 5, 6, 7, 8, 9, 10, 11)]  #mtcars[c(1,3,5,6)] # get data 
+plotData.r <- abs(cor(plotData)) # get correlations
+plotData.col <- dmat.color(plotData.r) # get colors
+# reorder variables so those with highest correlation
+# are closest to the diagonal
+plotData.o <- order.single(plotData.r) 
+cpairs(plotData, plotData.o, panel.colors=plotData.col, gap=.5,
+main="Variables Ordered and Colored by Correlation" )
+#this isn't really all that informative - predictvely area, radius and permieter are correlated
+#instead plot diagnosis against each variable
+par(mfrow=c(4,3)) 
+#radius mean
+hist(BCDf$radius_mean[BCDf$diagnosis==0],
+col=c("blue"), xlab="radius_mean", ylab="Frequency", main="A",
+xlim=c(0, 30), ylim=c(0, 80),
+las=1,
+breaks=10)
+hist(BCDf$radius_mean[BCDf$diagnosis==1], col=c("blue"),
+xlab="radius_mean", ylab="Frequency", main="B",
+xlim=c(0, 30), ylim=c(0, 80),
+las=1,
+breaks=10)
+plot(BCDf$radius_mean, BCDf$diagnosis,
+main="C",
+xlab ="radius_mean",
+ylab ="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(BCDf$diagnosis == 0, "green","blue"), pch=19,
+las=1)
+#texture_mean
+hist(BCDf$texture_mean[BCDf$diagnosis==0],
+col=c("blue"), xlab="texture_mean", ylab="Frequency", main="D",
+xlim=c(0, 30), ylim=c(0, 80),
+las=1,
+breaks=10)
+hist(BCDf$texture_mean[BCDf$diagnosis==1], col=c("blue"),
+xlab="texture_mean", ylab="Frequency", main="E",
+xlim=c(0, 30), ylim=c(0, 80),
+las=1,
+breaks=10)
+plot(BCDf$texture_mean, BCDf$diagnosis,
+main="F",
+xlab ="texture_mean",
+ylab ="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(BCDf$diagnosis == 0, "green","blue"), pch=19,
+las=1)
+#perimeter_mean
+hist(BCDf$perimeter_mean[BCDf$diagnosis==0],
+col=c("blue"), xlab="perimeter_mean", ylab="Frequency", main="G",
+xlim=c(0, 30), ylim=c(0, 80),
+las=1,
+breaks=10)
+hist(BCDf$perimeter_mean[BCDf$diagnosis==1], col=c("blue"),
+xlab="perimeter_mean", ylab="Frequency", main="H",
+xlim=c(0, 30), ylim=c(0, 80),
+las=1,
+breaks=10)
+plot(BCDf$perimeter_mean, BCDf$diagnosis,
+main="I",
+xlab ="perimeter_mean",
+ylab ="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(BCDf$diagnosis == 0, "green","blue"), pch=19,
+las=1)
+#area_mean
+hist(BCDf$area_mean[BCDf$diagnosis==0],
+col=c("blue"), xlab="area_mean", ylab="Frequency", main="J",
+xlim=c(0, 30), ylim=c(0, 80),
+las=1,
+breaks=10)
+hist(BCDf$area_mean[BCDf$diagnosis==1], col=c("blue"),
+xlab="area_mean", ylab="Frequency", main="K",
+xlim=c(0, 30), ylim=c(0, 80),
+las=1,
+breaks=10)
+plot(BCDf$area_mean, BCDf$diagnosis,
+main="L",
+xlab ="area_mean",
+ylab ="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(BCDf$diagnosis == 0, "green","blue"), pch=19,
+las=1)
+par(mfrow=c(4,3)) 
+#smoothness_mean
+hist(BCDf$smoothness_mean[BCDf$diagnosis==0],
+col=c("blue"), xlab="smoothness_mean", ylab="Frequency", main="M",
+xlim=c(0, 30), ylim=c(0, 80),
+las=1,
+breaks=10)
+hist(BCDf$smoothness_mean[BCDf$diagnosis==1], col=c("blue"),
+xlab="smoothness_mean", ylab="Frequency", main="N",
+xlim=c(0, 30), ylim=c(0, 80),
+las=1,
+breaks=10)
+plot(BCDf$smoothness_mean, BCDf$diagnosis,
+main="O",
+xlab ="smoothness_mean",
+ylab ="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(BCDf$diagnosis == 0, "green","blue"), pch=19,
+las=1)
+#concavity_mean
+hist(BCDf$concavity_mean[BCDf$diagnosis==0],
+col=c("blue"), xlab="concavity_mean", ylab="Frequency", main="P",
+xlim=c(0, 30), ylim=c(0, 80),
+las=1,
+breaks=10)
+hist(BCDf$concavity_mean[BCDf$diagnosis==1], col=c("blue"),
+xlab="concavity_mean", ylab="Frequency", main="Q",
+xlim=c(0, 30), ylim=c(0, 80),
+las=1,
+breaks=10)
+plot(BCDf$concavity_mean, BCDf$diagnosis,
+main="R",
+xlab ="concavity_mean",
+ylab ="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(BCDf$diagnosis == 0, "green","blue"), pch=19,
+las=1)
+#concave.point_mean
+hist(BCDf$concave.points_mean[BCDf$diagnosis==0],
+col=c("blue"), xlab="concave.points_mean", ylab="Frequency", main="S",
+xlim=c(0, 30), ylim=c(0, 80),
+las=1,
+breaks=10)
+hist(BCDf$concave.points_mean[BCDf$diagnosis==1], col=c("blue"),
+xlab="concave.points_mean", ylab="Frequency", main="T",
+xlim=c(0, 30), ylim=c(0, 80),
+las=1,
+breaks=10)
+plot(BCDf$concave.points_mean, BCDf$diagnosis,
+main="U",
+xlab ="concave.points_mean",
+ylab ="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(BCDf$diagnosis == 0, "green","blue"), pch=19,
+las=1)
+#symmetry_mean
+hist(BCDf$symmetry_mean[BCDf$diagnosis==0],
+col=c("blue"), xlab="symmetry_mean", ylab="Frequency", main="V",
+xlim=c(0, 30), ylim=c(0, 80),
+las=1,
+breaks=10)
+hist(BCDf$symmetry_mean[BCDf$diagnosis==1], col=c("blue"),
+xlab="symmetry_mean", ylab="Frequency", main="W",
+xlim=c(0, 30), ylim=c(0, 80),
+las=1,
+breaks=10)
+plot(BCDf$symmetry_mean, BCDf$diagnosis,
+main="X",
+xlab ="symmetry_mean",
+ylab ="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(BCDf$diagnosis == 0, "green","blue"), pch=19,
+las=1)
+par(mfrow=c(1,3)) 
+#fractal_dimension_mean
+hist(BCDf$fractal_dimension_mean[BCDf$diagnosis==0],
+col=c("blue"), xlab="fractal_dimension_mean", ylab="Frequency", main="Y",
+xlim=c(0, 30), ylim=c(0, 80),
+las=1,
+breaks=10)
+hist(BCDf$fractal_dimension_mean[BCDf$diagnosis==1], col=c("blue"),
+xlab="fractal_dimension_mean", ylab="Frequency", main="Z",
+xlim=c(0, 30), ylim=c(0, 80),
+las=1,
+breaks=10)
+plot(BCDf$fractal_dimension_mean, BCDf$diagnosis,
+main="ZZ",
+xlab ="fractal_dimension_mean",
+ylab ="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(BCDf$diagnosis == 0, "green","blue"), pch=19,
+las=1)
+
 ```
 
 ```{r Indian Liver Patient }
@@ -88,6 +277,9 @@ LiverDf$Dataset[LiverDf$Dataset==1]<-0
 LiverDf$Dataset[LiverDf$Dataset==2]<-1
 head(LiverDf)
 LiverDfCounts <- table(LiverDf$Dataset)
+
+#matrix plot
+
 
 ```
 
