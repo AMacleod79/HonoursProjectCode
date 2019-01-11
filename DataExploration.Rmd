@@ -87,7 +87,7 @@ cpairs(plotData, plotData.o, panel.colors=plotData.col, gap=.5,
 main="Variables Ordered and Colored by Correlation" )
 #this isn't really all that informative - predictvely area, radius and permieter are correlated
 #instead plot diagnosis against each variable
-par(mfrow=c(4,3)) 
+par(mfrow=c(2,3)) 
 #radius mean
 hist(BCDf$radius_mean[BCDf$diagnosis==0],
 col=c("blue"), xlab="radius_mean", ylab="Frequency", main="A",
@@ -110,12 +110,12 @@ las=1)
 #texture_mean
 hist(BCDf$texture_mean[BCDf$diagnosis==0],
 col=c("blue"), xlab="texture_mean", ylab="Frequency", main="D",
-xlim=c(0, 30), ylim=c(0, 80),
+xlim=c(0, 40), ylim=c(0, 80),
 las=1,
 breaks=10)
 hist(BCDf$texture_mean[BCDf$diagnosis==1], col=c("blue"),
 xlab="texture_mean", ylab="Frequency", main="E",
-xlim=c(0, 30), ylim=c(0, 80),
+xlim=c(0, 40), ylim=c(0, 80),
 las=1,
 breaks=10)
 plot(BCDf$texture_mean, BCDf$diagnosis,
@@ -126,15 +126,16 @@ xaxt="n",
 yaxt="n",
 col=ifelse(BCDf$diagnosis == 0, "green","blue"), pch=19,
 las=1)
+par(mfrow=c(2,3)) 
 #perimeter_mean
 hist(BCDf$perimeter_mean[BCDf$diagnosis==0],
 col=c("blue"), xlab="perimeter_mean", ylab="Frequency", main="G",
-xlim=c(0, 30), ylim=c(0, 80),
+xlim=c(0, 190), ylim=c(0, 100),
 las=1,
 breaks=10)
 hist(BCDf$perimeter_mean[BCDf$diagnosis==1], col=c("blue"),
 xlab="perimeter_mean", ylab="Frequency", main="H",
-xlim=c(0, 30), ylim=c(0, 80),
+xlim=c(0, 190), ylim=c(0, 100),
 las=1,
 breaks=10)
 plot(BCDf$perimeter_mean, BCDf$diagnosis,
@@ -148,14 +149,14 @@ las=1)
 #area_mean
 hist(BCDf$area_mean[BCDf$diagnosis==0],
 col=c("blue"), xlab="area_mean", ylab="Frequency", main="J",
-xlim=c(0, 30), ylim=c(0, 80),
+xlim=c(0, 2600), ylim=c(0, 10),
 las=1,
-breaks=10)
+breaks=500)
 hist(BCDf$area_mean[BCDf$diagnosis==1], col=c("blue"),
 xlab="area_mean", ylab="Frequency", main="K",
-xlim=c(0, 30), ylim=c(0, 80),
+xlim=c(0, 2600), ylim=c(0, 10),
 las=1,
-breaks=10)
+breaks=500)
 plot(BCDf$area_mean, BCDf$diagnosis,
 main="L",
 xlab ="area_mean",
@@ -164,16 +165,16 @@ xaxt="n",
 yaxt="n",
 col=ifelse(BCDf$diagnosis == 0, "green","blue"), pch=19,
 las=1)
-par(mfrow=c(4,3)) 
+par(mfrow=c(2,3)) 
 #smoothness_mean
 hist(BCDf$smoothness_mean[BCDf$diagnosis==0],
 col=c("blue"), xlab="smoothness_mean", ylab="Frequency", main="M",
-xlim=c(0, 30), ylim=c(0, 80),
+xlim=c(0, 0.5), ylim=c(0, 80),
 las=1,
 breaks=10)
 hist(BCDf$smoothness_mean[BCDf$diagnosis==1], col=c("blue"),
 xlab="smoothness_mean", ylab="Frequency", main="N",
-xlim=c(0, 30), ylim=c(0, 80),
+xlim=c(0, 0.5), ylim=c(0, 80),
 las=1,
 breaks=10)
 plot(BCDf$smoothness_mean, BCDf$diagnosis,
@@ -184,15 +185,35 @@ xaxt="n",
 yaxt="n",
 col=ifelse(BCDf$diagnosis == 0, "green","blue"), pch=19,
 las=1)
+#compactness_mean
+hist(BCDf$compactness_mean[BCDf$diagnosis==0],
+col=c("blue"), xlab="compactness_mean", ylab="Frequency", main="M",
+xlim=c(0, 0.5), ylim=c(0, 80),
+las=1,
+breaks=10)
+hist(BCDf$compactness_mean[BCDf$diagnosis==1], col=c("blue"),
+xlab="compactness_mean", ylab="Frequency", main="N",
+xlim=c(0, 0.5), ylim=c(0, 80),
+las=1,
+breaks=10)
+plot(BCDf$compactness_mean, BCDf$diagnosis,
+main="O",
+xlab ="compactness_mean",
+ylab ="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(BCDf$diagnosis == 0, "green","blue"), pch=19,
+las=1)
+par(mfrow=c(2,3)) 
 #concavity_mean
 hist(BCDf$concavity_mean[BCDf$diagnosis==0],
 col=c("blue"), xlab="concavity_mean", ylab="Frequency", main="P",
-xlim=c(0, 30), ylim=c(0, 80),
+xlim=c(0, 0.5), ylim=c(0, 80),
 las=1,
 breaks=10)
 hist(BCDf$concavity_mean[BCDf$diagnosis==1], col=c("blue"),
 xlab="concavity_mean", ylab="Frequency", main="Q",
-xlim=c(0, 30), ylim=c(0, 80),
+xlim=c(0, 0.5), ylim=c(0, 80),
 las=1,
 breaks=10)
 plot(BCDf$concavity_mean, BCDf$diagnosis,
@@ -206,12 +227,12 @@ las=1)
 #concave.point_mean
 hist(BCDf$concave.points_mean[BCDf$diagnosis==0],
 col=c("blue"), xlab="concave.points_mean", ylab="Frequency", main="S",
-xlim=c(0, 30), ylim=c(0, 80),
+xlim=c(0, 0.5), ylim=c(0, 80),
 las=1,
 breaks=10)
 hist(BCDf$concave.points_mean[BCDf$diagnosis==1], col=c("blue"),
 xlab="concave.points_mean", ylab="Frequency", main="T",
-xlim=c(0, 30), ylim=c(0, 80),
+xlim=c(0, 0.5), ylim=c(0, 80),
 las=1,
 breaks=10)
 plot(BCDf$concave.points_mean, BCDf$diagnosis,
@@ -222,15 +243,16 @@ xaxt="n",
 yaxt="n",
 col=ifelse(BCDf$diagnosis == 0, "green","blue"), pch=19,
 las=1)
+par(mfrow=c(2,3)) 
 #symmetry_mean
 hist(BCDf$symmetry_mean[BCDf$diagnosis==0],
 col=c("blue"), xlab="symmetry_mean", ylab="Frequency", main="V",
-xlim=c(0, 30), ylim=c(0, 80),
+xlim=c(0, 1), ylim=c(0, 80),
 las=1,
 breaks=10)
 hist(BCDf$symmetry_mean[BCDf$diagnosis==1], col=c("blue"),
 xlab="symmetry_mean", ylab="Frequency", main="W",
-xlim=c(0, 30), ylim=c(0, 80),
+xlim=c(0, 1), ylim=c(0, 80),
 las=1,
 breaks=10)
 plot(BCDf$symmetry_mean, BCDf$diagnosis,
@@ -241,16 +263,15 @@ xaxt="n",
 yaxt="n",
 col=ifelse(BCDf$diagnosis == 0, "green","blue"), pch=19,
 las=1)
-par(mfrow=c(1,3)) 
 #fractal_dimension_mean
 hist(BCDf$fractal_dimension_mean[BCDf$diagnosis==0],
 col=c("blue"), xlab="fractal_dimension_mean", ylab="Frequency", main="Y",
-xlim=c(0, 30), ylim=c(0, 80),
+xlim=c(0, 0.1), ylim=c(0, 80),
 las=1,
 breaks=10)
 hist(BCDf$fractal_dimension_mean[BCDf$diagnosis==1], col=c("blue"),
 xlab="fractal_dimension_mean", ylab="Frequency", main="Z",
-xlim=c(0, 30), ylim=c(0, 80),
+xlim=c(0, 0.1), ylim=c(0, 80),
 las=1,
 breaks=10)
 plot(BCDf$fractal_dimension_mean, BCDf$diagnosis,
@@ -271,16 +292,204 @@ summary(LiverDf)
 colnames(LiverDf)
 
 #class distribution
+
+
+#-----------------------------------------------------------------------------
 # for this dataset label is 1 (no liver disease) and 2 (liver disease)
 #so first change all the 1 to 0 and 2 to 1 so all the datasets are the same
-LiverDf$Dataset[LiverDf$Dataset==1]<-0
-LiverDf$Dataset[LiverDf$Dataset==2]<-1
+#LiverDf$Dataset[LiverDf$Dataset==1]<-0  #uncomment if dataset is reloaded
+#LiverDf$Dataset[LiverDf$Dataset==2]<-1 #uncomment if dataset is reloaded
+#--------------------------------------------------------------------------------
 head(LiverDf)
 LiverDfCounts <- table(LiverDf$Dataset)
+barplot(LiverDfCounts)
 
-#matrix plot
+#variable against label visualisation
+par(mfrow=c(2,3)) 
+#age
+hist(LiverDf$Age[LiverDf$Dataset==0],
+col=c("blue"), xlab="Age", ylab="Frequency", main="A",
+xlim=c(0, 100), ylim=c(0, 120),
+las=1,
+breaks=10)
+hist(LiverDf$Age[LiverDf$Dataset==1], 
+col=c("blue"), xlab="Age", ylab="Frequency", main="B",
+xlim=c(0, 100), ylim=c(0, 120),
+las=1,
+breaks=10)
+plot(LiverDf$Age, LiverDf$Dataset,
+main="C",
+xlab ="Age",
+ylab ="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(LiverDf$Dataset == 0, "green","blue"), pch=19,
+las=1)
+#total_bilirubin
+hist(LiverDf$Total_Bilirubin[LiverDf$Dataset==0],
+col=c("blue"), xlab="Total_Bilirubin", ylab="Frequency", main="D",
+xlim=c(0, 80), ylim=c(0, 80),
+las=1,
+breaks=10)
+hist(LiverDf$Total_Bilirubin[LiverDf$Dataset==1], col=c("blue"),
+xlab="Total_Bilirubin", ylab="Frequency", main="E",
+xlim=c(0, 80), ylim=c(0, 80),
+las=1,
+breaks=10)
+plot(LiverDf$Total_Bilirubin, LiverDf$Dataset,
+main="F",
+xlab ="Total_Bilirubin",
+ylab ="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(LiverDf$Dataset == 0, "green","blue"), pch=19,
+las=1)
+par(mfrow=c(2,3)) 
+#direct bilirubin
+hist(LiverDf$Direct_Bilirubin[LiverDf$Dataset==0],
+col=c("blue"), xlab="Direct Bilirubin", ylab="Frequency", main="G",
+xlim=c(0, 20), ylim=c(0,100),
+las=1,
+breaks=10)
+hist(LiverDf$Direct_Bilirubin[LiverDf$Dataset==1],
+col=c("blue"), xlab="Direct BIlirubin", ylab="Frequency", main="H",
+xlim=c(0, 20), ylim=c(0,100),
+las=1,
+breaks=10)
+plot(LiverDf$Direct_Bilirubin, LiverDf$Dataset,
+main="I",
+xlab="Direct Bilirubin",
+ylab="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(LiverDf$Dataset ==0, "green", "blue"), pch=19,
+las=1)
+#alkaline phosphatase
+hist(LiverDf$Alkaline_Phosphotase[LiverDf$Dataset==0],
+col=c("blue"), xlab="Alkaline_Phosphotase", ylab="Frequency", main="J",
+xlim=c(0, 2200), ylim=c(0,30),
+las=1,
+breaks=200)
+hist(LiverDf$Alkaline_Phosphotase[LiverDf$Dataset==1],
+col=c("blue"), xlab="Alkaline_Phosphotase", ylab="Frequency", main="K",
+xlim=c(0, 2200), ylim=c(0,30),
+las=1,
+breaks=200)
+plot(LiverDf$Alkaline_Phosphotase, LiverDf$Dataset,
+main="L",
+xlab="Alkaline_Phosphotase",
+ylab="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(LiverDf$Dataset ==0, "green", "blue"), pch=19,
+las=1)
+par(mfrow=c(2,3)) 
+#Alamine_aminotransferase
+sapply(LiverDf, class)
+hist(LiverDf$Alamine_Aminotransferase[LiverDf$Dataset==0],
+col=c("blue"), xlab="Alamine_aminotransferase", ylab="Frequency", main="M",
+xlim=c(0, 2000), ylim=c(0,100),
+las=1,
+breaks=200)
+hist(LiverDf$Alamine_Aminotransferase[LiverDf$Dataset==1],
+col=c("blue"), xlab="Alamine_aminotransferase", ylab="Frequency", main="N",
+xlim=c(0, 500), ylim=c(0,100),
+las=1,
+breaks=200)
+plot(LiverDf$Alamine_Aminotransferase, LiverDf$Dataset,
+main="O",
+xlab="Alamine_aminotransferase",
+ylab="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(LiverDf$Dataset ==0, "green", "blue"), pch=19,
+las=1)
+#Aspartate_Aminotransferase
+hist(LiverDf$Aspartate_Aminotransferase[LiverDf$Dataset==0],
+col=c("blue"), xlab="Aspartate_Aminotransferase", ylab="Frequency", main="P",
+xlim=c(0, 5000), ylim=c(0,100),
+las=1,
+breaks=200)
+hist(LiverDf$Aspartate_Aminotransferase[LiverDf$Dataset==1],
+col=c("blue"), xlab="Aspartate_Aminotransferase", ylab="Frequency", main="Q",
+xlim=c(0, 500), ylim=c(0,100),
+las=1,
+breaks=200)
+plot(LiverDf$Aspartate_Aminotransferase, LiverDf$Dataset,
+main="R",
+xlab="Aspartate_Aminotransferase",
+ylab="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(LiverDf$Dataset ==0, "green", "blue"), pch=19,
+las=1)
+
+par(mfrow=c(2,3)) 
+#Total_Protiens 
+hist(LiverDf$Total_Protiens[LiverDf$Dataset==0],
+col=c("blue"), xlab="Total_Proteins ", ylab="Frequency", main="S",
+xlim=c(0, 20), ylim=c(0,100),
+las=1,
+breaks=2)
+hist(LiverDf$Total_Protiens[LiverDf$Dataset==1],
+col=c("blue"), xlab="Total_Proteins ", ylab="Frequency", main="T",
+xlim=c(0, 20), ylim=c(0,100),
+las=1,
+breaks=2)
+plot(LiverDf$Total_Protiens, LiverDf$Dataset,
+main="U",
+xlab="Total_Proteins",
+ylab="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(LiverDf$Dataset ==0, "green", "blue"), pch=19,
+las=1)
+#Albumin
+hist(LiverDf$Albumin[LiverDf$Dataset==0],
+col=c("blue"), xlab="Albumin", ylab="Frequency", main="V",
+xlim=c(0, 20), ylim=c(0,100),
+las=1,
+breaks=2)
+hist(LiverDf$Albumin[LiverDf$Dataset==1],
+col=c("blue"), xlab="Albumin", ylab="Frequency", main="W",
+xlim=c(0, 20), ylim=c(0,100),
+las=1,
+breaks=2)
+plot(LiverDf$Albumin, LiverDf$Dataset,
+main="X",
+xlab="Albumin",
+ylab="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(LiverDf$Dataset ==0, "green", "blue"), pch=19,
+las=1)
+par(mfrow=c(2,3)) 
+#Albumin_and_Globulin_Ratio 
+hist(LiverDf$Albumin_and_Globulin_Ratio[LiverDf$Dataset==0],
+col=c("blue"), xlab="Albumin_and_Globulin_Ratio ", ylab="Frequency", main="Y",
+xlim=c(0, 10), ylim=c(0,100),
+las=1,
+breaks=1)
+hist(LiverDf$Albumin_and_Globulin_Ratio[LiverDf$Dataset==1],
+col=c("blue"), xlab="Albumin_and_Globulin_Ratio ", ylab="Frequency", main="Z",
+xlim=c(0, 10), ylim=c(0,100),
+las=1,
+breaks=1)
+plot(LiverDf$Albumin_and_Globulin_Ratio, LiverDf$Dataset,
+main="ZZ",
+xlab="Albumin_and_Globulin_Ratio",
+ylab="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(LiverDf$Dataset ==0, "green", "blue"), pch=19,
+las=1)
 
 
+
+
+#gender
+MaleCounts <- count(LiverDf$Gender[LiverDf$Gender=="Male"])
+FemaleCounts <- count(LiverDf$Gender[LiverDf$Gender=="Female"])
 ```
 
 ```{r Alzheimer Dataset}
