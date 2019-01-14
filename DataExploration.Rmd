@@ -509,6 +509,77 @@ levels(AlzDf$Group)
 
 AlzDfCount <- table(AlzDf$Group)
 
+par(mfrow=c(2,4)) 
+#Visit
+hist(AlzDf$Visit[AlzDf$Group==0],
+col=c("blue"), xlab="Visit", ylab="Frequency", main="A",
+xlim=c(0,5), ylim=c(0, 100),
+las=1,
+breaks = 10)
+hist(AlzDf$Visit[AlzDf$Group==1],
+col=c("blue"), xlab="Visit", ylab="Frequency", main="B",
+xlim=c(0,5), ylim=c(0, 100),
+las=1,
+breaks = 10)
+hist(AlzDf$Visit[AlzDf$Group==2],
+col=c("blue"), xlab="Visit", ylab="Frequency", main="C",
+xlim=c(0,5), ylim=c(0, 100),
+las=1,
+breaks = 10)
+plot(AlzDf$Visit, AlzDf$Group,
+main="D",
+xlab="Visits",
+ylab="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(AlzDf$Group ==0, "green", "blue"), pch=19,
+las=1)
+#MR Delay
+hist(AlzDf$MR.Delay[AlzDf$Group==0],
+col=c("blue"), xlab="MR.Delay", ylab="Frequency", main="E",
+xlim=c(0,2700), ylim=c(0, 80),
+las=1,
+breaks = 10)
+hist(AlzDf$MR.Delay[AlzDf$Group==1],
+col=c("blue"), xlab="MR.Delay", ylab="Frequency", main="F",
+xlim=c(0,2700), ylim=c(0, 80),
+las=1,
+breaks = 10)
+hist(AlzDf$MR.Delay[AlzDf$Group==2],
+col=c("blue"), xlab="MR.Delay", ylab="Frequency", main="G",
+xlim=c(0,2700), ylim=c(0, 80),
+las=1,
+breaks = 10)
+plot(AlzDf$MR.Delay, AlzDf$Group,
+main="H",
+xlab="MR.Delay",
+ylab="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(AlzDf$Group ==0, "green", ifelse(AlzDf$Group==1,"blue", "red")), pch=19,
+las=1)
+
+par(mfrow=c(2,4)) 
+
+
+
+
+
+
+
+#age
+
+#MF
+#Hand
+#Age
+#Educ
+#SES
+#MMSE
+#CDR
+
+
+
+
 ```
 
 ```{r Pima Indian Diabetes Dataset}
