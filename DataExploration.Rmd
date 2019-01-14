@@ -954,6 +954,8 @@ colnames(CCDf)
 #in the meantime create class distribution for each
 #create an additional column for aggreagation score?
 
+# data visualisation
+
 
 ```
 ```{r Lower Back pain dataset}
@@ -991,6 +993,242 @@ levels(LBPDf$Class_label)
 
 #class distribution
 LBPDfCount <- table(LBPDf$Class_label)
+
+#data visualisation
+par(mfrow=c(2,3)) 
+#pelvic incidence
+hist(LBPDf$pelvic_incidence[LBPDf$Class_label==0],
+col=c("blue"), xlab="pelvic incidence", ylab="Frequency", main="A",
+xlim=c(0,130), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(LBPDf$pelvic_incidence[LBPDf$Class_label==1],
+col=c("blue"), xlab="pelvic incidence", ylab="Frequency", main="B",
+xlim=c(0,130), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(LBPDf$pelvic_incidence, LBPDf$Class_label,
+main="C",
+xlab="pelvic incidence",
+ylab="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(LBPDf$Class_label ==0, "green", "blue"), pch=19,
+las=1)
+#pelvic tilt
+hist(LBPDf$pelvic_tilt[LBPDf$Class_label==0],
+col=c("blue"), xlab="pelvic tilt", ylab="Frequency", main="D",
+xlim=c(-10,50), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(LBPDf$pelvic_tilt[LBPDf$Class_label==1],
+col=c("blue"), xlab="pelvic tilt", ylab="Frequency", main="E",
+xlim=c(-10,50), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(LBPDf$pelvic_tilt, LBPDf$Class_label,
+main="F",
+xlab="pelvic tilt",
+ylab="Diagnostic",
+xaxt="n",
+col=ifelse(LBPDf$Class_label ==0, "green", "blue"), pch=19,
+las=1)
+par(mfrow=c(2,3))
+#lumbar_lordosis_angle
+hist(LBPDf$lumbar_lordosis_angle[LBPDf$Class_label==0],
+col=c("blue"), xlab="lumbar_lordosis_angle", ylab="Frequency", main="G",
+xlim=c(0,130), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(LBPDf$lumbar_lordosis_angle[LBPDf$Class_label==1],
+col=c("blue"), xlab="lumbar_lordosis_angle", ylab="Frequency", main="H",
+xlim=c(0,130), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(LBPDf$lumbar_lordosis_angle, LBPDf$Class_label,
+main="I",
+xlab="lumbar_lordosis_angle",
+ylab="Diagnostic",
+xaxt="n",
+col=ifelse(LBPDf$Class_label ==0, "green", "blue"), pch=19,
+las=1)
+#sacral_slope
+hist(LBPDf$sacral_slope[LBPDf$Class_label==0],
+col=c("blue"), xlab="sacral_slope", ylab="Frequency", main="J",
+xlim=c(0,130), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(LBPDf$sacral_slope[LBPDf$Class_label==1],
+col=c("blue"), xlab="sacral_slope", ylab="Frequency", main="K",
+xlim=c(0,130), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(LBPDf$sacral_slope, LBPDf$Class_label,
+main="L",
+xlab="sacral_slope",
+ylab="Diagnostic",
+xaxt="n",
+col=ifelse(LBPDf$Class_label ==0, "green", "blue"), pch=19,
+las=1)
+par(mfrow=c(2,3))
+#pelvic radius
+hist(LBPDf$pelvic_radius[LBPDf$Class_label==0],
+col=c("blue"), xlab="pelvic radius", ylab="Frequency", main="M",
+xlim=c(0,165), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(LBPDf$pelvic_radius[LBPDf$Class_label==1],
+col=c("blue"), xlab="pelvic radius", ylab="Frequency", main="N",
+xlim=c(0,165), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(LBPDf$pelvic_radius, LBPDf$Class_label,
+main="O",
+xlab="pelvic radius",
+ylab="Diagnostic",
+xaxt="n",
+col=ifelse(LBPDf$Class_label ==0, "green", "blue"), pch=19,
+las=1)
+#degree spondylolisthesis
+hist(LBPDf$degree_spondylolisthesis[LBPDf$Class_label==0],
+col=c("blue"), xlab="degree spondylolisthesis", ylab="Frequency", main="P",
+xlim=c(-15,420), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(LBPDf$degree_spondylolisthesis[LBPDf$Class_label==1],
+col=c("blue"), xlab="degree spondylolisthesis", ylab="Frequency", main="Q",
+xlim=c(-15,420), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(LBPDf$degree_spondylolisthesis, LBPDf$Class_label,
+main="R",
+xlab="degree spondylolisthesis",
+ylab="Diagnostic",
+xaxt="n",
+col=ifelse(LBPDf$Class_label ==0, "green", "blue"), pch=19,
+las=1)
+par(mfrow=c(2,3))
+#pelvic slope
+hist(LBPDf$pelvic_slope[LBPDf$Class_label==0],
+col=c("blue"), xlab="pelvic slope", ylab="Frequency", main="S",
+xlim=c(0,1), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(LBPDf$pelvic_slope[LBPDf$Class_label==1],
+col=c("blue"), xlab="pelvic slope", ylab="Frequency", main="T",
+xlim=c(0,1), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(LBPDf$pelvic_slope, LBPDf$Class_label,
+main="U",
+xlab="pelvic slope",
+ylab="Diagnostic",
+xaxt="n",
+col=ifelse(LBPDf$Class_label ==0, "green", "blue"), pch=19,
+las=1)
+#direct tilt
+hist(LBPDf$direct_tilt[LBPDf$Class_label==0],
+col=c("blue"), xlab="direct tilt", ylab="Frequency", main="V",
+xlim=c(0,40), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(LBPDf$direct_tilt[LBPDf$Class_label==1],
+col=c("blue"), xlab="direct tilt", ylab="Frequency", main="W",
+xlim=c(0,40), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(LBPDf$direct_tilt, LBPDf$Class_label,
+main="X",
+xlab="direct tilt",
+ylab="Diagnostic",
+xaxt="n",
+col=ifelse(LBPDf$Class_label ==0, "green", "blue"), pch=19,
+las=1)
+par(mfrow=c(2,3))
+#thoracic slope
+hist(LBPDf$thoracic_slope[LBPDf$Class_label==0],
+col=c("blue"), xlab="thoracic slope", ylab="Frequency", main="Y",
+xlim=c(0,20), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(LBPDf$thoracic_slope[LBPDf$Class_label==1],
+col=c("blue"), xlab="thoracic slope", ylab="Frequency", main="Z",
+xlim=c(0,1), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(LBPDf$thoracic_slope, LBPDf$Class_label,
+main="ZZ",
+xlab="thoracic slope",
+ylab="Diagnostic",
+xaxt="n",
+col=ifelse(LBPDf$Class_label ==0, "green", "blue"), pch=19,
+las=1)
+#cervical tilt
+hist(LBPDf$cervical_tilt[LBPDf$Class_label==0],
+col=c("blue"), xlab="cervical tilt", ylab="Frequency", main="AA",
+xlim=c(0,20), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(LBPDf$cervical_tilt[LBPDf$Class_label==1],
+col=c("blue"), xlab="cervical tilt", ylab="Frequency", main="BB",
+xlim=c(0,20), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(LBPDf$cervical_tilt, LBPDf$Class_label,
+main="CC",
+xlab="cervical tilt",
+ylab="Diagnostic",
+xaxt="n",
+col=ifelse(LBPDf$Class_label ==0, "green", "blue"), pch=19,
+las=1)
+par(mfrow=c(2,3))
+#sacrum angle
+hist(LBPDf$sacrum_angle[LBPDf$Class_label==0],
+col=c("blue"), xlab="sacrum angle", ylab="Frequency", main="DD",
+xlim=c(-40,10), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(LBPDf$sacrum_angle[LBPDf$Class_label==1],
+col=c("blue"), xlab="sacrum angle", ylab="Frequency", main="EE",
+xlim=c(-40,10), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(LBPDf$sacrum_angle, LBPDf$Class_label,
+main="FF",
+xlab="sacrum angle",
+ylab="Diagnostic",
+xaxt="n",
+col=ifelse(LBPDf$Class_label ==0, "green", "blue"), pch=19,
+las=1)
+#scoliosis slope
+hist(LBPDf$scoliosis_slope[LBPDf$Class_label==0],
+col=c("blue"), xlab="scoliosis slope", ylab="Frequency", main="GG",
+xlim=c(0,45), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(LBPDf$scoliosis_slope[LBPDf$Class_label==1],
+col=c("blue"), xlab="scoliosis slope", ylab="Frequency", main="BB",
+xlim=c(0,45), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(LBPDf$scoliosis_slope, LBPDf$Class_label,
+main="CC",
+xlab="scoliosis slope",
+ylab="Diagnostic",
+xaxt="n",
+col=ifelse(LBPDf$Class_label ==0, "green", "blue"), pch=19,
+las=1)
+
+
+
+
+
+
+
+
+
+
+
 ```
 
 
