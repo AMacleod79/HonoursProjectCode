@@ -497,6 +497,7 @@ cat("Shape of AlzDf is: ", dim(AlzDf))
 head(AlzDf)
 summary(AlzDf)
 colnames(AlzDf)
+tail(AlzDf)
 
 #class distribution
 # for this dataset label is Demented, converted or nondemented 
@@ -506,6 +507,10 @@ levels(AlzDf$Group)[1]<-1
 levels(AlzDf$Group)[2]<-2
 levels(AlzDf$Group)[3]<-0
 levels(AlzDf$Group)
+
+#SES N/A value - set to 0
+AlzDf$SES[is.na(AlzDf$SES)] <- 0
+
 
 AlzDfCount <- table(AlzDf$Group)
 
@@ -532,7 +537,7 @@ xlab="Visits",
 ylab="Diagnostic",
 xaxt="n",
 yaxt="n",
-col=ifelse(AlzDf$Group ==0, "green", "blue"), pch=19,
+col=ifelse(AlzDf$Group ==0, "green", ifelse(AlzDf$Group==1,"blue", "red")),
 las=1)
 #MR Delay
 hist(AlzDf$MR.Delay[AlzDf$Group==0],
@@ -560,23 +565,207 @@ col=ifelse(AlzDf$Group ==0, "green", ifelse(AlzDf$Group==1,"blue", "red")), pch=
 las=1)
 
 par(mfrow=c(2,4)) 
-
-
-
-
-
-
-
 #age
-
+hist(AlzDf$Age[AlzDf$Group==0],
+col=c("blue"), xlab="Age", ylab="Frequency", main="I",
+xlim=c(0,100), ylim=c(0, 80),
+las=1,
+breaks = 10)
+hist(AlzDf$Age[AlzDf$Group==1],
+col=c("blue"), xlab="Age", ylab="Frequency", main="J",
+xlim=c(0,100), ylim=c(0, 80),
+las=1,
+breaks = 10)
+hist(AlzDf$Age[AlzDf$Group==2],
+col=c("blue"), xlab="Age", ylab="Frequency", main="K",
+xlim=c(0,100), ylim=c(0, 80),
+las=1,
+breaks = 10)
+plot(AlzDf$Age, AlzDf$Group,
+main="L",
+xlab="Age",
+ylab="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(AlzDf$Group ==0, "green", ifelse(AlzDf$Group==1,"blue", "red")), pch=19,
+las=1)
 #MF
 #Hand
-#Age
-#Educ
-#SES
-#MMSE
-#CDR
 
+#Educ
+hist(AlzDf$EDUC[AlzDf$Group==0],
+col=c("blue"), xlab="Education", ylab="Frequency", main="M",
+xlim=c(0,25), ylim=c(0, 100),
+las=1,
+breaks = 5)
+hist(AlzDf$EDUC[AlzDf$Group==1],
+col=c("blue"), xlab="Education", ylab="Frequency", main="N",
+xlim=c(0,25), ylim=c(0, 100),
+las=1,
+breaks = 5)
+hist(AlzDf$EDUC[AlzDf$Group==2],
+col=c("blue"), xlab="Education", ylab="Frequency", main="O",
+xlim=c(0,25), ylim=c(0, 100),
+las=1,
+breaks = 5)
+plot(AlzDf$EDUC, AlzDf$Group,
+main="P",
+xlab="Education",
+ylab="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(AlzDf$Group ==0, "green", ifelse(AlzDf$Group==1,"blue", "red")), pch=19,
+las=1)
+
+par(mfrow=c(2,4)) 
+#SES
+hist(AlzDf$SES[AlzDf$Group==0],
+col=c("blue"), xlab="SES", ylab="Frequency", main="Q",
+xlim=c(0,5), ylim=c(0, 100),
+las=1,
+breaks = 10)
+hist(AlzDf$SES[AlzDf$Group==1],
+col=c("blue"), xlab="SES", ylab="Frequency", main="R",
+xlim=c(0,5), ylim=c(0, 100),
+las=1,
+breaks = 10)
+hist(AlzDf$SES[AlzDf$Group==2],
+col=c("blue"), xlab="SES", ylab="Frequency", main="S",
+xlim=c(0,5), ylim=c(0, 100),
+las=1,
+breaks = 10)
+plot(AlzDf$SES, AlzDf$Group,
+main="T",
+xlab="SES",
+ylab="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(AlzDf$Group ==0, "green", ifelse(AlzDf$Group==1,"blue", "red")), pch=19,
+las=1)
+#MMSE
+hist(AlzDf$MMSE[AlzDf$Group==0],
+col=c("blue"), xlab="MMSE", ylab="Frequency", main="U",
+xlim=c(0,30), ylim=c(0, 100),
+las=1,
+breaks = 10)
+hist(AlzDf$MMSE[AlzDf$Group==1],
+col=c("blue"), xlab="MMSE", ylab="Frequency", main="V",
+xlim=c(0,30), ylim=c(0, 100),
+las=1,
+breaks = 10)
+hist(AlzDf$MMSE[AlzDf$Group==2],
+col=c("blue"), xlab="MMSE", ylab="Frequency", main="W",
+xlim=c(0,30), ylim=c(0, 100),
+las=1,
+breaks = 10)
+plot(AlzDf$MMSE, AlzDf$Group,
+main="X",
+xlab="MMSE",
+ylab="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(AlzDf$Group ==0, "green", ifelse(AlzDf$Group==1,"blue", "red")), pch=19,
+las=1)
+
+par(mfrow=c(2,4)) 
+#CDR
+hist(AlzDf$CDR[AlzDf$Group==0],
+col=c("blue"), xlab="CDR", ylab="Frequency", main="Y",
+xlim=c(0,2), ylim=c(0, 100),
+las=0.2,
+breaks = 10)
+hist(AlzDf$CDR[AlzDf$Group==1],
+col=c("blue"), xlab="CDR", ylab="Frequency", main="Z",
+xlim=c(0,2), ylim=c(0, 100),
+las=0.2,
+breaks = 10)
+hist(AlzDf$CDR[AlzDf$Group==2],
+col=c("blue"), xlab="CDR", ylab="Frequency", main="ZZ",
+xlim=c(0,2), ylim=c(0, 100),
+las=0.2,
+breaks = 10)
+plot(AlzDf$CDR, AlzDf$Group,
+main="AA",
+xlab="CDR",
+ylab="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(AlzDf$Group ==0, "green", ifelse(AlzDf$Group==1,"blue", "red")), pch=19,
+las=1)
+#eTIV
+hist(AlzDf$eTIV[AlzDf$Group==0],
+col=c("blue"), xlab="eTIV", ylab="Frequency", main="BB",
+xlim=c(0,2), ylim=c(0, 100),
+las=0.2,
+breaks = 10)
+hist(AlzDf$eTIV[AlzDf$Group==1],
+col=c("blue"), xlab="eTIV", ylab="Frequency", main="CC",
+xlim=c(0,2), ylim=c(0, 100),
+las=0.2,
+breaks = 10)
+hist(AlzDf$eTIV[AlzDf$Group==2],
+col=c("blue"), xlab="eTIV", ylab="Frequency", main="DD",
+xlim=c(0,2), ylim=c(0, 100),
+las=0.2,
+breaks = 10)
+plot(AlzDf$eTIV, AlzDf$Group,
+main="EE",
+xlab="eTIV",
+ylab="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(AlzDf$Group ==0, "green", ifelse(AlzDf$Group==1,"blue", "red")), pch=19,
+las=1)
+
+par(mfrow=c(2,4)) 
+#nWBV
+hist(AlzDf$nWBV[AlzDf$Group==0],
+col=c("blue"), xlab="nWBV", ylab="Frequency", main="FF",
+xlim=c(0,1), ylim=c(0, 100),
+las=0.1,
+breaks = 10)
+hist(AlzDf$nWBV[AlzDf$Group==1],
+col=c("blue"), xlab="nWBV", ylab="Frequency", main="GG",
+xlim=c(0,1), ylim=c(0, 100),
+las=0.1,
+breaks = 10)
+hist(AlzDf$nWBV[AlzDf$Group==2],
+col=c("blue"), xlab="nWBV", ylab="Frequency", main="HH",
+xlim=c(0,1), ylim=c(0, 100),
+las=0.1,
+breaks = 10)
+plot(AlzDf$nWBV, AlzDf$Group,
+main="II",
+xlab="nWBV",
+ylab="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(AlzDf$Group ==0, "green", ifelse(AlzDf$Group==1,"blue", "red")), pch=19,
+las=1)
+#ASF
+hist(AlzDf$ASF[AlzDf$Group==0],
+col=c("blue"), xlab="ASF", ylab="Frequency", main="JJ",
+xlim=c(0,2), ylim=c(0, 100),
+las=0.1,
+breaks = 10)
+hist(AlzDf$ASF[AlzDf$Group==1],
+col=c("blue"), xlab="ASF", ylab="Frequency", main="KK",
+xlim=c(0,2), ylim=c(0, 100),
+las=0.1,
+breaks = 10)
+hist(AlzDf$ASF[AlzDf$Group==2],
+col=c("blue"), xlab="ASF", ylab="Frequency", main="LL",
+xlim=c(0,2), ylim=c(0, 100),
+las=0.1,
+breaks = 10)
+plot(AlzDf$ASF, AlzDf$Group,
+main="MM",
+xlab="ASF",
+ylab="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(AlzDf$Group ==0, "green", ifelse(AlzDf$Group==1,"blue", "red")), pch=19,
+las=1)
 
 
 
@@ -591,6 +780,166 @@ colnames(DiabetesDf)
 #class distribution
 #outcome is already 1(develop diabetes within 5 years) or 0 (will not develop diabetes within 5 years) so no need to recode
 DiabetesDfCount <-table(DiabetesDf$Outcome)
+
+#data visualisation
+par(mfrow=c(2,3)) 
+#Pregnancies
+hist(DiabetesDf$Pregnancies[DiabetesDf$Outcome==0],
+col=c("blue"), xlab="Pregnancies", ylab="Frequency", main="A",
+xlim=c(0,20), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(DiabetesDf$Pregnancies[DiabetesDf$Outcome==1],
+col=c("blue"), xlab="Pregnancies", ylab="Frequency", main="B",
+xlim=c(0,5), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(DiabetesDf$Pregnancies, DiabetesDf$Outcome,
+main="C",
+xlab="Pregnancies",
+ylab="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(DiabetesDf$Outcome ==0, "green", "blue"), pch=19,
+las=1)
+#Glucose
+hist(DiabetesDf$Glucose[DiabetesDf$Outcome==0],
+col=c("blue"), xlab="Glucose", ylab="Frequency", main="D",
+xlim=c(0,200), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(DiabetesDf$Glucose[DiabetesDf$Outcome==1],
+col=c("blue"), xlab="Glucose", ylab="Frequency", main="E",
+xlim=c(0,200), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(DiabetesDf$Glucose, DiabetesDf$Outcome,
+main="F",
+xlab="Glucose",
+ylab="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(DiabetesDf$Outcome ==0, "green", "blue"), pch=19,
+las=1)
+par(mfrow=c(2,3)) 
+#Blood Pressure
+hist(DiabetesDf$BloodPressure[DiabetesDf$Outcome==0],
+col=c("blue"), xlab="Blood Pressure", ylab="Frequency", main="G",
+xlim=c(0,130), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(DiabetesDf$BloodPressure[DiabetesDf$Outcome==1],
+col=c("blue"), xlab="Blood Pressure", ylab="Frequency", main="H",
+xlim=c(0,130), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(DiabetesDf$BloodPressure, DiabetesDf$Outcome,
+main="I",
+xlab="Blood Pressure",
+ylab="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(DiabetesDf$Outcome ==0, "green", "blue"), pch=19,
+las=1)
+#Skin Thickness
+hist(DiabetesDf$SkinThickness[DiabetesDf$Outcome==0],
+col=c("blue"), xlab="Skin Thickness", ylab="Frequency", main="J",
+xlim=c(0,100), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(DiabetesDf$SkinThickness[DiabetesDf$Outcome==1],
+col=c("blue"), xlab="Skin Thickness", ylab="Frequency", main="K",
+xlim=c(0,100), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(DiabetesDf$SkinThickness, DiabetesDf$Outcome,
+main="L",
+xlab="Skin Thickness",
+ylab="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(DiabetesDf$Outcome ==0, "green", "blue"), pch=19,
+las=1)
+par(mfrow=c(2,3)) 
+#Insulin
+hist(DiabetesDf$Insulin[DiabetesDf$Outcome==0],
+col=c("blue"), xlab="Insulin", ylab="Frequency", main="M",
+xlim=c(0,850), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(DiabetesDf$Insulin[DiabetesDf$Outcome==1],
+col=c("blue"), xlab="Insulin", ylab="Frequency", main="N",
+xlim=c(0,850), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(DiabetesDf$Insulin, DiabetesDf$Outcome,
+main="O",
+xlab="Insulin",
+ylab="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(DiabetesDf$Outcome ==0, "green", "blue"), pch=19,
+las=1)
+#BMI
+hist(DiabetesDf$BMI[DiabetesDf$Outcome==0],
+col=c("blue"), xlab="BMI", ylab="Frequency", main="P",
+xlim=c(0,100), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(DiabetesDf$BMI[DiabetesDf$Outcome==1],
+col=c("blue"), xlab="BMI", ylab="Frequency", main="Q",
+xlim=c(0,100), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(DiabetesDf$BMI, DiabetesDf$Outcome,
+main="R",
+xlab="BMI",
+ylab="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(DiabetesDf$Outcome ==0, "green", "blue"), pch=19,
+las=1)
+par(mfrow=c(2,3)) 
+#Diabetes Pedigree Function 
+hist(DiabetesDf$DiabetesPedigreeFunction[DiabetesDf$Outcome==0],
+col=c("blue"), xlab="Diabetes Pedigree Function", ylab="Frequency", main="S",
+xlim=c(0,2.5), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(DiabetesDf$DiabetesPedigreeFunction[DiabetesDf$Outcome==1],
+col=c("blue"), xlab="Diabetes Pedigree Function", ylab="Frequency", main="T",
+xlim=c(0,2.5), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(DiabetesDf$DiabetesPedigreeFunction, DiabetesDf$Outcome,
+main="U",
+xlab="Diabetes Pedigree Function",
+ylab="Diagnostic",
+xaxt="n",
+yaxt="n",
+col=ifelse(DiabetesDf$Outcome ==0, "green", "blue"), pch=19,
+las=1)
+#Age
+hist(DiabetesDf$Age[DiabetesDf$Outcome==0],
+col=c("blue"), xlab="Age", ylab="Frequency", main="U",
+xlim=c(0,85), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(DiabetesDf$Age[DiabetesDf$Outcome==1],
+col=c("blue"), xlab="Age", ylab="Frequency", main="V",
+xlim=c(0,85), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(DiabetesDf$Age, DiabetesDf$Outcome,
+main="W",
+xlab="Age",
+ylab="Diagnostic",
+xaxt="n",
+col=ifelse(DiabetesDf$Outcome ==0, "green", "blue"), pch=19,
+las=1)
+
+
+
 ```
 
 ```{r Cervical Cancer Dataset}
