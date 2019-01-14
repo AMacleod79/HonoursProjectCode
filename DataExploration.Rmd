@@ -1237,6 +1237,7 @@ cat("Shape of HAPDf is: ", dim(HAPDf))
 head(HAPDf)
 summary(HAPDf)
 colnames(HAPDf)
+cat(HAPDf$trestbps)
 
 # this appears to contain only the hungarian database (number of rows)
 #class labels is expressed as 0 (no heart disease) or 1 -4 (heart disease ) in the num column
@@ -1248,6 +1249,252 @@ min(HAPDf$num)
 
 #class distribution
 HAPDfCount <- table(HAPDf$num)
+
+
+#data visualisation
+par(mfrow=c(2,3))
+#age
+hist(HAPDf$age[HAPDf$num==0],
+col=c("blue"), xlab="age", ylab="Frequency", main="A",
+xlim=c(0,70), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(HAPDf$age[HAPDf$num==1],
+col=c("blue"), xlab="age", ylab="Frequency", main="B",
+xlim=c(0,70), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(HAPDf$age, HAPDf$num,
+main="C",
+xlab="age",
+ylab="Diagnostic",
+xaxt="n",
+col=ifelse(HAPDf$num ==0, "green", "blue"), pch=19,
+las=1)
+#sex
+hist(HAPDf$sex[HAPDf$num==0],
+col=c("blue"), xlab="sex", ylab="Frequency", main="D",
+xlim=c(0,1), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(HAPDf$sex[HAPDf$num==1],
+col=c("blue"), xlab="sex", ylab="Frequency", main="E",
+xlim=c(0,1), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(HAPDf$sex, HAPDf$num,
+main="F",
+xlab="sex",
+ylab="Diagnostic",
+xaxt="n",
+col=ifelse(HAPDf$num ==0, "green", "blue"), pch=19,
+las=1)
+par(mfrow=c(2,3))
+#cp
+hist(HAPDf$cp[HAPDf$num==0],
+col=c("blue"), xlab="cp", ylab="Frequency", main="G",
+xlim=c(0,4), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(HAPDf$cp[HAPDf$num==1],
+col=c("blue"), xlab="cp", ylab="Frequency", main="H",
+xlim=c(0,4), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(HAPDf$cp, HAPDf$num,
+main="I",
+xlab="cp",
+ylab="Diagnostic",
+xaxt="n",
+col=ifelse(HAPDf$num ==0, "green", "blue"), pch=19,
+las=1)
+#trestbps
+hist(HAPDf$trestbps[HAPDf$num==0],
+col=c("blue"), xlab="trestbps", ylab="Frequency", main="J",
+xlim=c(0,180), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(HAPDf$trestbps[HAPDf$num==1],
+col=c("blue"), xlab="trestbps", ylab="Frequency", main="K",
+xlim=c(0,180), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(HAPDf$trestbps, HAPDf$num,
+main="L",
+xlab="trestbps",
+ylab="Diagnostic",
+xaxt="n",
+col=ifelse(HAPDf$num ==0, "green", "blue"), pch=19,
+las=1)
+par(mfrow=c(2,3))
+#chol
+hist(HAPDf$chol[HAPDf$num==0],
+col=c("blue"), xlab="cholesterol", ylab="Frequency", main="M",
+xlim=c(0,280), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(HAPDf$chol[HAPDf$num==1],
+col=c("blue"), xlab="cholesterol", ylab="Frequency", main="N",
+xlim=c(0,280), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(HAPDf$chol, HAPDf$num,
+main="O",
+xlab="cholesterol",
+ylab="Diagnostic",
+xaxt="n",
+col=ifelse(HAPDf$num ==0, "green", "blue"), pch=19,
+las=1)
+#fbs
+hist(HAPDf$fbs[HAPDf$num==0],
+col=c("blue"), xlab="fbs", ylab="Frequency", main="P",
+xlim=c(0,2), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(HAPDf$fbs[HAPDf$num==1],
+col=c("blue"), xlab="fbs", ylab="Frequency", main="Q",
+xlim=c(0,2), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(HAPDf$fbs, HAPDf$num,
+main="R",
+xlab="fbs",
+ylab="Diagnostic",
+xaxt="n",
+col=ifelse(HAPDf$num ==0, "green", "blue"), pch=19,
+las=1)
+par(mfrow=c(2,3))
+#restecg
+hist(HAPDf$restecg[HAPDf$num==0],
+col=c("blue"), xlab="rest ecg", ylab="Frequency", main="S",
+xlim=c(0,280), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(HAPDf$restecg[HAPDf$num==1],
+col=c("blue"), xlab="rest ecg", ylab="Frequency", main="T",
+xlim=c(0,280), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(HAPDf$restecg, HAPDf$num,
+main="U",
+xlab="rest ecg",
+ylab="Diagnostic",
+xaxt="n",
+col=ifelse(HAPDf$num ==0, "green", "blue"), pch=19,
+las=1)
+#thalach
+hist(HAPDf$thalach[HAPDf$num==0],
+col=c("blue"), xlab="thalach", ylab="Frequency", main="V",
+xlim=c(0,180), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(HAPDf$thalach[HAPDf$num==1],
+col=c("blue"), xlab="thalach", ylab="Frequency", main="W",
+xlim=c(0,180), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(HAPDf$thalach, HAPDf$num,
+main="X",
+xlab="thalach",
+ylab="Diagnostic",
+xaxt="n",
+col=ifelse(HAPDf$num ==0, "green", "blue"), pch=19,
+las=1)
+par(mfrow=c(2,3))
+#exang
+hist(HAPDf$exang[HAPDf$num==0],
+col=c("blue"), xlab="exang", ylab="Frequency", main="Y",
+xlim=c(0,1), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(HAPDf$exang[HAPDf$num==1],
+col=c("blue"), xlab="exang", ylab="Frequency", main="Z",
+xlim=c(0,1), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(HAPDf$exang, HAPDf$num,
+main="AA",
+xlab="exang",
+ylab="Diagnostic",
+xaxt="n",
+col=ifelse(HAPDf$num ==0, "green", "blue"), pch=19,
+las=1)
+#oldpeak
+hist(HAPDf$oldpeak[HAPDf$num==0],
+col=c("blue"), xlab="oldpeak", ylab="Frequency", main="BB",
+xlim=c(0,5), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(HAPDf$fbs[HAPDf$num==1],
+col=c("blue"), xlab="oldpeak", ylab="Frequency", main="CC",
+xlim=c(0,5), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(HAPDf$oldpeak, HAPDf$num,
+main="DD",
+xlab="old peak",
+ylab="Diagnostic",
+xaxt="n",
+col=ifelse(HAPDf$num ==0, "green", "blue"), pch=19,
+las=1)
+par(mfrow=c(2,3))
+#slope
+hist(HAPDf$slope[HAPDf$num==0],
+col=c("blue"), xlab="slope", ylab="Frequency", main="EE",
+xlim=c(0,5), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(HAPDf$slope[HAPDf$num==1],
+col=c("blue"), xlab="slope", ylab="Frequency", main="FF",
+xlim=c(0,5), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(HAPDf$slope, HAPDf$num,
+main="MM",
+xlab="cholesterol",
+ylab="Diagnostic",
+xaxt="n",
+col=ifelse(HAPDf$num ==0, "green", "blue"), pch=19,
+las=1)
+#ca
+hist(HAPDf$fbs[HAPDf$num==0],
+col=c("blue"), xlab="fbs", ylab="Frequency", main="NN",
+xlim=c(0,2), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(HAPDf$fbs[HAPDf$num==1],
+col=c("blue"), xlab="fbs", ylab="Frequency", main="OO",
+xlim=c(0,2), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(HAPDf$fbs, HAPDf$num,
+main="PP",
+xlab="fbs",
+ylab="Diagnostic",
+xaxt="n",
+col=ifelse(HAPDf$num ==0, "green", "blue"), pch=19,
+las=1)
+#thal
+hist(HAPDf$thal[HAPDf$num==0],
+col=c("blue"), xlab="thal", ylab="Frequency", main="QQ",
+xlim=c(0,10), ylim=c(0, 150),
+las=1,
+breaks = 10)
+hist(HAPDf$thal[HAPDf$num==1],
+col=c("blue"), xlab="thal", ylab="Frequency", main="OO",
+xlim=c(0,10), ylim=c(0, 150),
+las=1,
+breaks = 10)
+plot(HAPDf$thal, HAPDf$num,
+main="PP",
+xlab="thal",
+ylab="Diagnostic",
+xaxt="n",
+col=ifelse(HAPDf$num ==0, "green", "blue"), pch=19,
+las=1)
+
+
+
 ```
 
 ```{r Autism screening}
@@ -1266,6 +1513,31 @@ levels(AuSDf$Class.ASD)
 levels(AuSDf$Class.ASD)[1] <-0
 levels(AuSDf$Class.ASD)[2]<-1
 levels(AuSDf$Class.ASD)
+
+
+#identify all the levels for the columns that are factors
+levels(AuSDf$age)
+levels(AuSDf$gender)
+levels(AuSDf$ethnicity)
+levels(AuSDf$jundice)
+levels(AuSDf$autism)
+levels(AuSDf$contry_of_res)
+levels(AuSDf$used_app_before)
+levels(AuSDf$age_desc)
+levels(AuSDf$relation)
+
+#visualisation
+## barplots
+#table(AuSDf$contry_of_res, AuSDf$Class.ASD)  ## get the cross tab
+barplot(table(AuSDf$Class.ASD, AuSDf$contry_of_res), beside = TRUE, legend = levels(AuSDf$Class.ASD),
+        #xlim = AuSDf$contry_of_res,
+        ylim=c(0,110))  ## plot 
+
+barplot(table(AuSDf$Class.ASD, AuSDf$age), beside = TRUE, legend = levels(AuSDf$Class.ASD), ylim = c(0, 110))
+barplot(table(AuSDf$Class.ASD, AuSDf$gender), beside = TRUE, legend = levels(AuSDf$Class.ASD), ylim = c(0, 300))
+barplot(table(AuSDf$Class.ASD, AuSDf$austim), beside = TRUE, legend = levels(AuSDf$Class.ASD), ylim = c(0,500))
+barplot(table(AuSDf$Class.ASD, AuSDf$ethnicity), beside = TRUE, legend = levels(AuSDf$Class.ASD), ylim = c(0,500))
+barplot(table(AuSDf$Class.ASD, AuSDf$result), beside = TRUE, legend = levels(AuSDf$Class.ASD), ylim = c(0,500))
 
 #class distribution
 AuSDfCount <- table(AuSDf$Class.ASD)
