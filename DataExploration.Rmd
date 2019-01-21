@@ -1591,7 +1591,7 @@ FertDfCount <- table(FertDf$Diagnosis)
 All of the datasets have been uploaded and processed so as to have numeric class labels
 Let's now display the class distribution on a graph 
 
-```{r}
+```{r Class Distribution}
 #class distribution of all datasets
 #create a 3x3 array
 png("Figure 4.1.png")
@@ -1634,6 +1634,122 @@ barplot(FertDfCount, col=c("blue"),
         main = "I")
 dev.off()
 
+
+```
+
+```{r Class Distribution - One graph}
+#create the columns for a dataframe to hold the percentage of each class for each dataset
+
+#percentage of cases where class label = 0 maxClassBC 
+#total rows
+numRowBC <-nrow(BCDf) #[BCDf$diagnosis ==0])
+print(numRowBC,  digits = 5)
+#maxClassBC
+numMaxRowBC <- nrow(BCDf[BCDf$diagnosis ==0,])
+print(numMaxRowBC)
+#minClassBC
+numRowMinBC <- nrow(BCDf[BCDf$diagnosis==1,])
+print(numRowMinBC)
+#convert to percentage
+numRowMinBC<- numRowMinBC * 100 / numRowBC
+print(numRowMinBC)
+numMaxRowBC <- numMaxRowBC * 100 /numRowBC
+print(numMaxRowBC)
+#liver dataset
+numRowLiver <- nrow(LiverDf)
+#percentage for each class
+numMaxRowLiver <- 100*(nrow(LiverDf[LiverDf$Dataset==0,]))/numRowLiver
+numMinRowLiver <-100*(nrow(LiverDf[LiverDf$Dataset==1,]))/numRowLiver
+#Alzheimer Dataset
+#focus on 1 and 0 
+numRowAlz <- nrow(AlzDf)
+numMaxRowAlz <- 100 * (nrow(AlzDf[AlzDf$Group==0,]))/numRowAlz
+numMinRowAlz <- 100 * (nrow(AlzDf[AlzDf$Group==1,]))/numRowAlz
+#Diabetes dataset
+numRowDiab <- nrow(DiabetesDf)
+numMaxRowDiab <- 100*(nrow(DiabetesDf[DiabetesDf$Outcome==0,]))/numRowDiab
+numMinRowDiab <- 100*(nrow(DiabetesDf[DiabetesDf$Outcome==1,]))/numRowDiab
+#Cervical cancre dataset
+numRowCC <- nrow(CCDf)
+numMinRowCC <- 100*(nrow(CCDf[CCDf$Biopsy==1,]))/numRowCC
+numMaxRowCC <- 100*(nrow(CCDf[CCDf$Biopsy ==0,]))/numRowCC
+#Low back pain
+numRowLBP <- nrow(LBPDf)
+numMinLBP <- 100*(nrow(LBPDf[LBPDf$Class_label==1,]))/numRowLBP
+numMaxLBP <-100*(nrow(LBPDf[LBPDf$Class_label==0,]))/numRowLBP
+#Heart attack dataset
+numRowHA <- nrow(HAPDf)
+numMaxHA <- 100*(nrow(HAPDf[HAPDf$num==0,]))/numRowHA
+numMinHA <- 100*(nrow(HAPDf[HAPDf$num==1,]))/numRowHA
+#autism dataset
+numRowAu <- nrow(AuSDf)
+numRowMaxAu <- 100*(nrow(AuSDf[AuSDf$Class.ASD==0,]))/numRowAu
+numRowMinAu <- 100*(nrow(AuSDf[AuSDf$Class.ASD==1,]))/numRowAu
+#fertility
+numRowFert <- nrow(FertDf)
+numRowMaxFert <- 100*(nrow(FertDf[FertDf$Diagnosis==0,]))/numRowFert
+numRowMinFert <-100 *(nrow(FertDf[FertDf$Diagnosis==1,]))/numRowFert
+#create dataframe to hold the percentages for each classes
+#three columns Dataset, Minority Class, Majority class
+# rows are each dataset
+
+classDist <- data.frame("Dataset" =c("Breast_Cancer",
+                                     "Breast_Cancer",
+                                     "Liver_Disease",
+                                     "Liver_Disease",
+                                     "Alzheimer",
+                                     "Alzheimer",
+                                     "Diabetes",
+                                     "Diabetes",
+                                     "Cervical_Cancer",
+                                     "Cervical_Cancer",
+                                     "Lower_Back_Pain",
+                                     "Lower_Back_Pain",
+                                     "Heart_Attack",
+                                     "Heart_Attack",
+                                     "Autism",
+                                     "Autism",
+                                     "Fertility",
+                                     "Fertility"
+                                     ),
+                        "Percentage" =c(numRowMinBC,
+                                        numMaxRowBC,
+                                        numMinRowLiver,
+                                        numMaxRowLiver,
+                                        numMinRowAlz,
+                                        numMaxRowAlz,
+                                        numMinRowDiab,
+                                        numMaxRowDiab,
+                                        numMinRowCC,
+                                        numMaxRowCC,
+                                        numMinLBP,
+                                        numMaxLBP,
+                                        numMinHA,
+                                        numMaxHA,
+                                        numRowMinAu,
+                                        numRowMaxAu,
+                                        numRowMinFert,
+                                        numRowMaxFert
+                                        ),
+                        "Category" = c("Minority Class", "Majority Class",
+                                       "Minority Class", "Majority Class",
+                                       "Minority Class", "Majority Class",
+                                       "Minority Class", "Majority Class",
+                                       "Minority Class", "Majority Class",
+                                       "Minority Class", "Majority Class",
+                                       "Minority Class", "Majority Class",
+                                       "Minority Class", "Majority Class",
+                                       "Minority Class", "Majority Class")
+                        )
+str(classDist)
+#import ggplot2
+library(ggplot2)
+# Use position=position_dodge()
+# need to adjust size
+#png("Figure 4.2.png")
+ggplot(data=classDist, aes(x=Dataset, y=Percentage, fill=Category )) +
+geom_bar(stat="identity", position = position_dodge())
+ggsave("figure4_1.png",  width = 16, height = 10, dpi = 160)
 
 ```
 
