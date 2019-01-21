@@ -66,7 +66,8 @@ levels(BCDf$diagnosis)[2] <-1
 levels(BCDf$diagnosis)
 
 head(BCDf)
-
+BCDf[!complete.cases(BCDf),]
+#only missing data is in the X column (not used)
 # class distribution
 BCCounts <- table(BCDf$diagnosis)
 
@@ -281,7 +282,7 @@ ylab ="Diagnostic",
 xaxt="n",
 yaxt="n",
 col=ifelse(BCDf$diagnosis == 0, "green","blue"), pch=19,
-las=1)
+las=1)67
 
 ```
 
@@ -303,6 +304,13 @@ colnames(LiverDf)
 head(LiverDf)
 LiverDfCounts <- table(LiverDf$Dataset)
 barplot(LiverDfCounts)
+#check for missing data
+LiverDf[!complete.cases(LiverDf),]
+#only four rows, in column albumin and globulin ratio
+# replace with mean for that column (0.9471)
+LiverDf$Albumin_and_Globulin_Ratio[is.na(LiverDf$Albumin_and_Globulin_Ratio)] <- 0.9471
+LiverDf[!complete.cases(LiverDf),]
+
 
 #variable against label visualisation
 par(mfrow=c(2,3)) 
@@ -1537,8 +1545,9 @@ barplot(table(AuSDf$Class.ASD, AuSDf$age), beside = TRUE, legend = levels(AuSDf$
 barplot(table(AuSDf$Class.ASD, AuSDf$gender), beside = TRUE, legend = levels(AuSDf$Class.ASD), ylim = c(0, 300))
 barplot(table(AuSDf$Class.ASD, AuSDf$austim), beside = TRUE, legend = levels(AuSDf$Class.ASD), ylim = c(0,500))
 barplot(table(AuSDf$Class.ASD, AuSDf$ethnicity), beside = TRUE, legend = levels(AuSDf$Class.ASD), ylim = c(0,500))
+png("figureA.png")
 barplot(table(AuSDf$Class.ASD, AuSDf$result), beside = TRUE, legend = levels(AuSDf$Class.ASD), ylim = c(0,500))
-
+dev.off()
 #class distribution
 AuSDfCount <- table(AuSDf$Class.ASD)
 ```
