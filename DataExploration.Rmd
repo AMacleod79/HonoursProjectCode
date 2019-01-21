@@ -958,9 +958,14 @@ cat("Shape of CCDf is: ", dim(CCDf))
 head(CCDf)
 summary(CCDf)
 colnames(CCDf)
+CCDf[!complete.cases(CCDf),]
+# missing data is imputed with ?
 
 #class distribution
 #there are four labels here (Hinselmann, Schiller, Citology and Biopsy) already expressed numerically as 0 or 1
+# choose biopsy
+CCDfCount <- table(CCDf$Biopsy)
+
 #perhaps need to consider only one or aggregate as 1?
 #in the meantime create class distribution for each
 #create an additional column for aggreagation score?
@@ -969,6 +974,9 @@ colnames(CCDf)
 
 
 ```
+
+
+
 ```{r Lower Back pain dataset}
 cat("Shape of LBPDf is: ", dim(LBPDf))
 head(LBPDf)
@@ -1001,6 +1009,9 @@ levels(LBPDf$Class_label)
 levels(LBPDf$Class_label)[1] <- 1
 levels(LBPDf$Class_label)[2] <-0
 levels(LBPDf$Class_label)
+
+
+LBPDf[!complete.cases(LBPDf),]
 
 #class distribution
 LBPDfCount <- table(LBPDf$Class_label)
@@ -1258,6 +1269,8 @@ min(HAPDf$num)
 
 # max and min of num column are 1 and O so looks like the diagnostic is binary after all.
 
+#find missing data
+HAPDf[!complete.cases(HAPDf),]
 #class distribution
 HAPDfCount <- table(HAPDf$num)
 
@@ -1537,6 +1550,8 @@ levels(AuSDf$used_app_before)
 levels(AuSDf$age_desc)
 levels(AuSDf$relation)
 
+AuSDf[!complete.cases(AuSDf),]
+
 #visualisation
 ## barplots
 #table(AuSDf$contry_of_res, AuSDf$Class.ASD)  ## get the cross tab
@@ -1568,6 +1583,7 @@ levels(FertDf$Diagnosis)[1] <- 1
 levels(FertDf$Diagnosis)[2] <- 0
 levels(FertDf$Diagnosis)
 
+FertDf[!complete.cases(FertDf),]
 #class distribution
 FertDfCount <- table(FertDf$Diagnosis)
 ```
@@ -1578,6 +1594,7 @@ Let's now display the class distribution on a graph
 ```{r}
 #class distribution of all datasets
 #create a 3x3 array
+png("Figure 4.1.png")
 par(mfrow=c(3,3))
 barplot(BCCounts, col=c("blue"),
         xlab = "Breast Cancer Diagnosis Distribution",
@@ -1615,6 +1632,7 @@ barplot(FertDfCount, col=c("blue"),
         xlab = "Fertility Diagnsotic Distribution",
         ylab = "Frequency",
         main = "I")
+dev.off()
 
 
 ```
