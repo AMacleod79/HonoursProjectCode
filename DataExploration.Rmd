@@ -70,7 +70,8 @@ BCDf[!complete.cases(BCDf),]
 #only missing data is in the X column (not used)
 # class distribution
 BCCounts <- table(BCDf$diagnosis)
-
+#save dataframe
+save(BCDf, file="BCDf.rda")
 # show distribution of each mean column
 BCAreaMCounts <- density(BCDf$area_mean)
 plot(BCAreaMCounts, main = "Distribution of the values for area (mean)", xlab ="area values")
@@ -310,6 +311,7 @@ LiverDf[!complete.cases(LiverDf),]
 # replace with mean for that column (0.9471)
 LiverDf$Albumin_and_Globulin_Ratio[is.na(LiverDf$Albumin_and_Globulin_Ratio)] <- 0.9471
 LiverDf[!complete.cases(LiverDf),]
+save(LiverDf, file="LiverDf.rda")
 
 
 #variable against label visualisation
@@ -522,6 +524,7 @@ AlzDf$SES[is.na(AlzDf$SES)] <- 2.46
 # MMSE N/A value set to mean for MMSE (2 rows) 27.34
 AlzDf$MMSE[is.na(AlzDf$MMSE)] <- 27.34
 summary(AlzDf)
+save(AlzDf, file="AlzDf.rda")
 
 AlzDfCount <- table(AlzDf$Group)
 
@@ -787,6 +790,7 @@ cat("Shape of DiabetesDf is: ", dim(DiabetesDf))
 head(DiabetesDf)
 summary(DiabetesDf)
 colnames(DiabetesDf)
+save(DiabetesDf, file="DiabetesDf.rda")
 
 #class distribution
 #outcome is already 1(develop diabetes within 5 years) or 0 (will not develop diabetes within 5 years) so no need to recode
@@ -960,7 +964,7 @@ summary(CCDf)
 colnames(CCDf)
 CCDf[!complete.cases(CCDf),]
 # missing data is imputed with ?
-
+save(CCDf, file="CCdf.rda")
 #class distribution
 #there are four labels here (Hinselmann, Schiller, Citology and Biopsy) already expressed numerically as 0 or 1
 # choose biopsy
@@ -1012,7 +1016,7 @@ levels(LBPDf$Class_label)
 
 
 LBPDf[!complete.cases(LBPDf),]
-
+save(LBPDf, file="LBPDf.rda")
 #class distribution
 LBPDfCount <- table(LBPDf$Class_label)
 
@@ -1271,6 +1275,7 @@ min(HAPDf$num)
 
 #find missing data
 HAPDf[!complete.cases(HAPDf),]
+save(HAPDf, file="HAPDf.rda")
 #class distribution
 HAPDfCount <- table(HAPDf$num)
 
@@ -1551,7 +1556,7 @@ levels(AuSDf$age_desc)
 levels(AuSDf$relation)
 
 AuSDf[!complete.cases(AuSDf),]
-
+save(AuSDf, file="AuSDf.rda")
 #visualisation
 ## barplots
 #table(AuSDf$contry_of_res, AuSDf$Class.ASD)  ## get the cross tab
@@ -1584,6 +1589,7 @@ levels(FertDf$Diagnosis)[2] <- 0
 levels(FertDf$Diagnosis)
 
 FertDf[!complete.cases(FertDf),]
+save(FertDf, file="FertDf.rda")
 #class distribution
 FertDfCount <- table(FertDf$Diagnosis)
 ```
