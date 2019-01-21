@@ -516,9 +516,12 @@ levels(AlzDf$Group)[2]<-2
 levels(AlzDf$Group)[3]<-0
 levels(AlzDf$Group)
 
-#SES N/A value - set to 0
-AlzDf$SES[is.na(AlzDf$SES)] <- 0
-
+AlzDf[!complete.cases(AlzDf),]
+#SES N/A value - set to mean for SES (19 rows) 2.46
+AlzDf$SES[is.na(AlzDf$SES)] <- 2.46
+# MMSE N/A value set to mean for MMSE (2 rows) 27.34
+AlzDf$MMSE[is.na(AlzDf$MMSE)] <- 27.34
+summary(AlzDf)
 
 AlzDfCount <- table(AlzDf$Group)
 
