@@ -5,3 +5,16 @@ This is a collection of  R-studio notebooks. The notebooks correspond to each pr
 
 ## List of notebooks:
 -  DataExploration.Rmd
+- InitialDataModelling.Rmd
+
+## List of additional files
+ - BCDf.csv
+ - LiverDf.csv
+ - DiabetesDf.csv
+ - AuSDf.csv
+ - HAPDf.csv
+ - LBPDf.csv
+ - CCDf.csv
+ - FertDf.csv
+ - AlzDf.csv
+ 
