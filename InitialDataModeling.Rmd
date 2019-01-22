@@ -236,6 +236,9 @@ levels(AuSDf_train$contry_of_res)
 #there are 65 possible country of residence, RF only supports up to 53
 #consider that country of residence may not have an impact on autism diagnostic and drop the column?
 #drop the contry of residence in train and test
+#or convert to string 
+# returns an error (see unusued code at bottom of notebook)
+
 AuSDf_train<-subset(AuSDf_train,select=c(- contry_of_res))
 AuSDf_test<-subset(AuSDf_test,select=c(- contry_of_res))
 for (i in 1:10){
@@ -350,12 +353,86 @@ for (i in 1:10){
 }#end for loop
 
 resultsFert
+
+
 #HAPDf2
+ntrees<-500
+resultsHAP <- data.frame(NTrees=as.numeric(), Accuracy=as.numeric(), AUC=as.numeric()) #, F1=as.numeric()
+#fit randomForest 10 times and store the results 
+#vary the number of trees in every iteration
+colnames(HAPDf_train)
+colnames(HAPDf_test)
+head(HAPDf_train)
+levels(HAPDf_train$trestbps)
+levels(HAPDf_train$chol) # too many factor categories in this column - convert to numeric
+HAPDf_train$chol<- as.numeric(HAPDf_train$chol)
+HAPDf_test$chol<- as.numeric(HAPDf_test$chol)
+levels(HAPDf_train$fbs)
+levels(HAPDf_train$restecg)
+levels(HAPDf_train$thalach) #too many factor categories in this column - convert to numeric
+HAPDf_train$thalach<- as.numeric(HAPDf_train$thalach)
+HAPDf_test$thalach<- as.numeric(HAPDf_test$thalach)
+levels(HAPDf_train$exang)
+levels(HAPDf_train$slope)
+levels(HAPDf_train$ca)
+levels(HAPDf_train$thal)
+#convert the class label as a factor
+HAPDf_train$num <- as.factor((HAPDf_train$num))
+HAPDf_test$num <- as.factor((HAPDf_test$num))
+
+for (i in 1:10){
+  RFModelHAP <-randomForest(HAPDf_train[, -ncol(HAPDf_train)], #class label is last column
+                            HAPDf_train[, ncol(HAPDf_train)], 
+                            xtest=HAPDf_test[, -ncol(HAPDf_test)], 
+                            ytest=HAPDf_test[, ncol(HAPDf_test)], 
+                            ntree = ntrees,
+                            proximity = TRUE
+                        )
+  #test the model for this run
+  predsHAP <- levels(HAPDf_train[, ncol(HAPDf_train)])[RFModelHAP$test$predicted] #compute accuracy
+  print(predsHAP)
+  accuHAPRF <-(sum(predsHAP==HAPDf_test[, ncol(HAPDf_test)])/nrow(HAPDf_test))*100 
+  #F1BC <-f1Score(BCDf_test$diagnosis, preds,0.5)
+  resultsHAP<- rbind(resultsHAP, data.frame(NTrees=ntrees,Accuracy=accuHAPRF)) #, F1= F1BC
+  ntrees <- ntrees + 100 
+}#end for loop
+
+resultsHAP
+
 
 #LBPDf2
 
 
 #randomForest(x, y=NULL,  xtest=NULL, ytest=NULL, ntree=500,proximity)
 
+```
+
+```{r unusued}
+# AuSDf_train$contry_of_res <- as.character(AuSDf_train$contry_of_res)
+# AuSDf_test$contry_of_res<- as.character(AuSDf_test$contry_of_res)
+# head(AuSDf_train)
+# str(AuSDf_train$contry_of_res)
+# AuSDf_train$contry_of_res[AuSDf_train$contry_of_res == "'United Kingdom'"] <- "UK"
+# AuSDf_train$contry_of_res[AuSDf_train$contry_of_res == "'United States'"] <- "US"
+# AuSDf_train$contry_of_res[AuSDf_train$contry_of_res == "'New Zealand'"] <- "NZ"
+# AuSDf_train$contry_of_res[AuSDf_train$contry_of_res == "'Sri Lanka'"] <- "Sri Lanka"
+# AuSDf_train$contry_of_res[AuSDf_train$contry_of_res == "'United Arab Emirates'"] <- "UAE"
+# AuSDf_train$contry_of_res[AuSDf_train$contry_of_res == "'Viet Nam'"] <- "Vietnam"
+# AuSDf_train$contry_of_res[AuSDf_train$contry_of_res == "'Saudi Arabia'"] <- "Saudi Arabia"
+# AuSDf_train$contry_of_res[AuSDf_train$contry_of_res == "'Sierra Leone'"] <- "Sierra Leone"
+# print(AuSDf_train$contry_of_res)
+# AuSDf_test$contry_of_res[AuSDf_test$contry_of_res == "'United Kingdom'"] <- "UK"
+# AuSDf_test$contry_of_res[AuSDf_test$contry_of_res == "'United States'"] <- "US"
+# AuSDf_test$contry_of_res[AuSDf_test$contry_of_res == "'New Zealand'"] <- "NZ"
+# AuSDf_test$contry_of_res[AuSDf_test$contry_of_res == "'Sri Lanka'"] <- "Sri Lanka"
+# AuSDf_test$contry_of_res[AuSDf_test$contry_of_res == "'United Arab Emirates'"] <- "UAE"
+# AuSDf_test$contry_of_res[AuSDf_test$contry_of_res == "'Viet Nam'"] <- "Vietnam"
+# AuSDf_test$contry_of_res[AuSDf_test$contry_of_res == "'Saudi Arabia'"] <- "Saudi Arabia"
+# AuSDf_test$contry_of_res[AuSDf_test$contry_of_res == "'Sierra Leone'"] <- "Sierra Leone"
+# print(AuSDf_test$contry_of_res)
+
+#error returned by RF model for AuSDf when country is changed to character
+#NAs introduced by coercionNAs introduced by coercionError in randomForest.default(AuSDf_train[, -ncol(AuSDf_train)], #AuSDf_train[,  : 
+ # NA/NaN/Inf in foreign function call (arg 1)
 ```
 
