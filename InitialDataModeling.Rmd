@@ -239,7 +239,7 @@ levels(AuSDf_train$contry_of_res)
 AuSDf_train<-subset(AuSDf_train,select=c(- contry_of_res))
 AuSDf_test<-subset(AuSDf_test,select=c(- contry_of_res))
 for (i in 1:10){
-  RFModelAuS <-randomForest(AuSDf_train[, -ncol(AuSDf_train)], #class label is column 3
+  RFModelAuS <-randomForest(AuSDf_train[, -ncol(AuSDf_train)], #class label is last column
                           AuSDf_train[, ncol(AuSDf_train)], 
                           xtest=AuSDf_test[, -ncol(AuSDf_test)], 
                           ytest=AuSDf_test[, ncol(AuSDf_test)], 
@@ -256,9 +256,42 @@ for (i in 1:10){
 }#end for loop
 
 resultsAuS
+# 100 % accuracy is suspicious
 
 #DiabetesDf2
+ntrees<-500
+resultsDiab <- data.frame(NTrees=as.numeric(), Accuracy=as.numeric(), AUC=as.numeric()) #, F1=as.numeric()
+#fit randomForest 10 times and store the results 
+#vary the number of trees in every iteration
+colnames(DiabetesDf_train)
+colnames(DiabetesDf_test)
+
+#convert the class label as a factor
+DiabetesDf_train$Outcome <- as.factor((DiabetesDf_train$Outcome))
+DiabetesDf_test$Outcome <- as.factor((DiabetesDf_test$Outcome))
+
+for (i in 1:10){
+  RFModelDiab <-randomForest(DiabetesDf_train[, -ncol(DiabetesDf_train)], #class label is last column
+                          DiabetesDf_train[, ncol(DiabetesDf_train)], 
+                          xtest=DiabetesDf_test[, -ncol(DiabetesDf_test)], 
+                          ytest=DiabetesDf_test[, ncol(DiabetesDf_test)], 
+                          ntree = ntrees,
+                         proximity = TRUE
+                        )
+  #test the model for this run
+  predsDiab <- levels(DiabetesDf_train[, ncol(DiabetesDf_train)])[RFModelDiab$test$predicted] #compute accuracy
+  print(predsDiab)
+  accuDiabRF <-(sum(predsDiab==DiabetesDf_test[, ncol(DiabetesDf_test)])/nrow(DiabetesDf_test))*100 
+  #F1BC <-f1Score(BCDf_test$diagnosis, preds,0.5)
+  resultsDiab<- rbind(resultsDiab, data.frame(NTrees=ntrees,Accuracy=accuDiabRF)) #, F1= F1BC
+  ntrees <- ntrees + 100 
+}#end for loop
+
+resultsDiab
+
 #LiverDf2
+
+
 #FertDf2
 #HAPDf2
 #LBPDf2
