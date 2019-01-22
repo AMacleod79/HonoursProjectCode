@@ -55,6 +55,8 @@ dim(BCDf_train)
 dim(BCDf_test)
 
 #AlzDf
+#drop column X
+AlzDf2 <-subset(AlzDf2, select=c(-X, -Subject.ID, -MRI.ID))
 AlzDf_shuff <-AlzDf2[sample(nrow(AlzDf2)),]
 dim(AlzDf_shuff)
 inTrainAlz <- createDataPartition(y= AlzDf_shuff$Group, p = 0.75, list = FALSE)
@@ -155,14 +157,6 @@ library(randomForest)
 library(ModelMetrics)
 
 #BCDf2
-#AlzDf2
-#CCDf2)
-#AuSDf2)
-#DiabetesDf2
-#LiverDf2
-#FertDf2
-#HAPDf2
-#LBPDf2
 #number of initial trees
 ntrees<-500
 #create a dataframe to store the accuracies and corresponding number of trees and other metrics
@@ -192,6 +186,45 @@ for (i in 1:10){
 }#end for loop
 
 resultsBC
+
+#AlzDf2
+#number of initial trees
+ntrees<-500
+resultsAlz <- data.frame(NTrees=as.numeric(), Accuracy=as.numeric(), AUC=as.numeric()) #, F1=as.numeric()
+#fit randomForest 10 times and store the results 
+#vary the number of trees in every iteration
+colnames(AlzDf_train)
+colnames(AlzDf_test)
+
+#convert the class label as a factor
+AlzDf_train$Group <- as.factor((AlzDf_train$Group))
+AlzDf_test$Group <- as.factor((AlzDf_test$Group))
+for (i in 1:10){
+  RFModelAlz <-randomForest(AlzDf_train[, -1], #class label is column 3
+                          AlzDf_train[, 1], 
+                          xtest=AlzDf_test[, -1], 
+                          ytest=AlzDf_test[, 1], 
+                          ntree = ntrees,
+                         proximity = TRUE
+                        )
+  #test the model for this run
+  predsAlz <- levels(AlzDf_train[, 1])[RFModelAlz$test$predicted] #compute accuracy
+  print(predsAlz)
+  accuAlzRF <-(sum(predsAlz==AlzDf_test[, 1])/nrow(AlzDf_test))*100 
+  #F1BC <-f1Score(BCDf_test$diagnosis, preds,0.5)
+  resultsAlz<- rbind(resultsAlz, data.frame(NTrees=ntrees,Accuracy=accuAlzRF)) #, F1= F1BC
+  ntrees <- ntrees + 100 
+}#end for loop
+
+resultsAlz
+#CCDf2)
+#AuSDf2)
+#DiabetesDf2
+#LiverDf2
+#FertDf2
+#HAPDf2
+#LBPDf2
+
 
 #randomForest(x, y=NULL,  xtest=NULL, ytest=NULL, ntree=500,proximity)
 
