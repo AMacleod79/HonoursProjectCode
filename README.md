@@ -18,3 +18,5 @@ This is a collection of  R-studio notebooks. The notebooks correspond to each pr
  - FertDf.csv
  - AlzDf.csv
  
+## Notes
+Please disregard the .rda files as they do not upload properly on R studio
