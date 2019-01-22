@@ -217,8 +217,46 @@ for (i in 1:10){
 }#end for loop
 
 resultsAlz
+
 #CCDf2)
-#AuSDf2)
+#remember to aggregate the score for this one
+
+#AuSDf2
+ntrees<-500
+resultsAuS <- data.frame(NTrees=as.numeric(), Accuracy=as.numeric(), AUC=as.numeric()) #, F1=as.numeric()
+#fit randomForest 10 times and store the results 
+#vary the number of trees in every iteration
+colnames(AuSDf_train)
+colnames(AuSDf_test)
+
+#convert the class label as a factor
+AuSDf_train$Class.ASD <- as.factor((AuSDf_train$Class.ASD))
+AuSDf_test$Class.ASD <- as.factor((AuSDf_test$Class.ASD))
+levels(AuSDf_train$contry_of_res)
+#there are 65 possible country of residence, RF only supports up to 53
+#consider that country of residence may not have an impact on autism diagnostic and drop the column?
+#drop the contry of residence in train and test
+AuSDf_train<-subset(AuSDf_train,select=c(- contry_of_res))
+AuSDf_test<-subset(AuSDf_test,select=c(- contry_of_res))
+for (i in 1:10){
+  RFModelAuS <-randomForest(AuSDf_train[, -ncol(AuSDf_train)], #class label is column 3
+                          AuSDf_train[, ncol(AuSDf_train)], 
+                          xtest=AuSDf_test[, -ncol(AuSDf_test)], 
+                          ytest=AuSDf_test[, ncol(AuSDf_test)], 
+                          ntree = ntrees,
+                         proximity = TRUE
+                        )
+  #test the model for this run
+  predsAuS <- levels(AuSDf_train[, ncol(AuSDf_train)])[RFModelAuS$test$predicted] #compute accuracy
+  print(predsAuS)
+  accuAuSRF <-(sum(predsAuS==AuSDf_test[, ncol(AuSDf_test)])/nrow(AuSDf_test))*100 
+  #F1BC <-f1Score(BCDf_test$diagnosis, preds,0.5)
+  resultsAuS<- rbind(resultsAuS, data.frame(NTrees=ntrees,Accuracy=accuAuSRF)) #, F1= F1BC
+  ntrees <- ntrees + 100 
+}#end for loop
+
+resultsAuS
+
 #DiabetesDf2
 #LiverDf2
 #FertDf2
