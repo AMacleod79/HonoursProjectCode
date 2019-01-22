@@ -43,7 +43,7 @@ summary(LBPDf2)
 library(caret)
 #BCDf
 #drop column X
-BCDf2<-subset(BCDf2,select=c(- X))
+BCDf2<-subset(BCDf2,select=c(- X, -X.1))
 colnames(BCDf2)
 #shuffle the data
 BCDf_shuff <- BCDf2[sample(nrow(BCDf2)),]
@@ -151,6 +151,49 @@ dim(FertDf_train)
 
 ```
 ```{r Random forest modelling}
+library(randomForest)
+library(ModelMetrics)
+
+#BCDf2
+#AlzDf2
+#CCDf2)
+#AuSDf2)
+#DiabetesDf2
+#LiverDf2
+#FertDf2
+#HAPDf2
+#LBPDf2
+#number of initial trees
+ntrees<-500
+#create a dataframe to store the accuracies and corresponding number of trees and other metrics
+resultsBC <- data.frame(NTrees=as.numeric(), Accuracy=as.numeric(), AUC=as.numeric()) #, F1=as.numeric()
+#fit randomForest 10 times and store the results 
+#vary the number of trees in every iteration
+colnames(BCDf_train)
+colnames(BCDf_test)
+BCDf_train$diagnosis <- as.factor(BCDf_train$diagnosis)
+BCDf_test$diagnosis <- as.factor((BCDf_test$diagnosis))
+for (i in 1:10){
+  RFModelBC <-randomForest(BCDf_train[, -2],
+                          BCDf_train[, 2], 
+                          xtest=BCDf_test[, -2], 
+                          ytest=BCDf_test[, 2], 
+                          ntree = ntrees,
+                         proximity = TRUE
+                        )
+  #test the model for this run
+  preds <- levels(BCDf_train[, 2])[RFModelBC$test$predicted] #compute accuracy
+  print(preds)
+  accuRF <-(sum(preds==BCDf_test[, 2])/nrow(BCDf_test))*100 
+  #F1BC <-f1Score(BCDf_test$diagnosis, preds,0.5)
+
+  resultsBC<- rbind(resultsBC, data.frame(NTrees=ntrees,Accuracy=accuRF)) #, F1= F1BC
+  ntrees <- ntrees + 100 
+}#end for loop
+
+resultsBC
+
+#randomForest(x, y=NULL,  xtest=NULL, ytest=NULL, ntree=500,proximity)
 
 ```
 
