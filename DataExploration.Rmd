@@ -61,8 +61,8 @@ summary(BCDf)
 colnames(BCDf)
 
 #class labels are B and M - Let's recode to 0 and 1
-levels(BCDf$diagnosis)[1] <-0
-levels(BCDf$diagnosis)[2] <-1
+levels(BCDf$diagnosis)[1] <-0 #uncomment if dataset is reloaded
+levels(BCDf$diagnosis)[2] <-1 #uncomment if dataset is reloaded
 levels(BCDf$diagnosis)
 
 head(BCDf)
@@ -70,8 +70,7 @@ BCDf[!complete.cases(BCDf),]
 #only missing data is in the X column (not used)
 # class distribution
 BCCounts <- table(BCDf$diagnosis)
-#save dataframe
-save(BCDf, file="BCDf.rda")
+
 # show distribution of each mean column
 BCAreaMCounts <- density(BCDf$area_mean)
 plot(BCAreaMCounts, main = "Distribution of the values for area (mean)", xlab ="area values")
@@ -283,7 +282,7 @@ ylab ="Diagnostic",
 xaxt="n",
 yaxt="n",
 col=ifelse(BCDf$diagnosis == 0, "green","blue"), pch=19,
-las=1)67
+las=1)
 
 ```
 
@@ -299,8 +298,8 @@ colnames(LiverDf)
 #-----------------------------------------------------------------------------
 # for this dataset label is 1 (no liver disease) and 2 (liver disease)
 #so first change all the 1 to 0 and 2 to 1 so all the datasets are the same
-#LiverDf$Dataset[LiverDf$Dataset==1]<-0  #uncomment if dataset is reloaded
-#LiverDf$Dataset[LiverDf$Dataset==2]<-1 #uncomment if dataset is reloaded
+LiverDf$Dataset[LiverDf$Dataset==1]<-0  #uncomment if dataset is reloaded
+LiverDf$Dataset[LiverDf$Dataset==2]<-1 #uncomment if dataset is reloaded
 #--------------------------------------------------------------------------------
 head(LiverDf)
 LiverDfCounts <- table(LiverDf$Dataset)
@@ -311,7 +310,7 @@ LiverDf[!complete.cases(LiverDf),]
 # replace with mean for that column (0.9471)
 LiverDf$Albumin_and_Globulin_Ratio[is.na(LiverDf$Albumin_and_Globulin_Ratio)] <- 0.9471
 LiverDf[!complete.cases(LiverDf),]
-save(LiverDf, file="LiverDf.rda")
+
 
 
 #variable against label visualisation
@@ -494,12 +493,9 @@ yaxt="n",
 col=ifelse(LiverDf$Dataset ==0, "green", "blue"), pch=19,
 las=1)
 
-
-
-
 #gender
-MaleCounts <- count(LiverDf$Gender[LiverDf$Gender=="Male"])
-FemaleCounts <- count(LiverDf$Gender[LiverDf$Gender=="Female"])
+#MaleCounts <- count(LiverDf$Gender[LiverDf$Gender=="Male"])
+#FemaleCounts <- count(LiverDf$Gender[LiverDf$Gender=="Female"])
 ```
 
 ```{r Alzheimer Dataset}
@@ -513,9 +509,9 @@ tail(AlzDf)
 # for this dataset label is Demented, converted or nondemented 
 #so first change all to 0(non demented) and 1 (converted) and 2(demented) so all the datasets are the same
 levels(AlzDf$Group)
-levels(AlzDf$Group)[1]<-1
-levels(AlzDf$Group)[2]<-2
-levels(AlzDf$Group)[3]<-0
+levels(AlzDf$Group)[1]<-1 #uncomment if dataset is reloaded
+levels(AlzDf$Group)[2]<-2  #uncomment if dataset is reloaded
+levels(AlzDf$Group)[3]<-0 #uncomment if dataset is reloaded
 levels(AlzDf$Group)
 
 AlzDf[!complete.cases(AlzDf),]
@@ -524,7 +520,7 @@ AlzDf$SES[is.na(AlzDf$SES)] <- 2.46
 # MMSE N/A value set to mean for MMSE (2 rows) 27.34
 AlzDf$MMSE[is.na(AlzDf$MMSE)] <- 27.34
 summary(AlzDf)
-save(AlzDf, file="AlzDf.rda")
+
 
 AlzDfCount <- table(AlzDf$Group)
 
@@ -790,7 +786,7 @@ cat("Shape of DiabetesDf is: ", dim(DiabetesDf))
 head(DiabetesDf)
 summary(DiabetesDf)
 colnames(DiabetesDf)
-save(DiabetesDf, file="DiabetesDf.rda")
+
 
 #class distribution
 #outcome is already 1(develop diabetes within 5 years) or 0 (will not develop diabetes within 5 years) so no need to recode
@@ -964,7 +960,7 @@ summary(CCDf)
 colnames(CCDf)
 CCDf[!complete.cases(CCDf),]
 # missing data is imputed with ?
-save(CCDf, file="CCdf.rda")
+
 #class distribution
 #there are four labels here (Hinselmann, Schiller, Citology and Biopsy) already expressed numerically as 0 or 1
 # choose biopsy
@@ -1010,13 +1006,13 @@ colnames(LBPDf)
 #need to recode class label 0 for Normal and 1 for abnormal
 #Class_attAbnormal, Normal
 levels(LBPDf$Class_label)
-levels(LBPDf$Class_label)[1] <- 1
-levels(LBPDf$Class_label)[2] <-0
+levels(LBPDf$Class_label)[1] <- 1 #uncomment if dataset is reloaded
+levels(LBPDf$Class_label)[2] <-0 #uncomment if dataset is reloaded
 levels(LBPDf$Class_label)
 
 
 LBPDf[!complete.cases(LBPDf),]
-save(LBPDf, file="LBPDf.rda")
+
 #class distribution
 LBPDfCount <- table(LBPDf$Class_label)
 
@@ -1275,7 +1271,7 @@ min(HAPDf$num)
 
 #find missing data
 HAPDf[!complete.cases(HAPDf),]
-save(HAPDf, file="HAPDf.rda")
+
 #class distribution
 HAPDfCount <- table(HAPDf$num)
 
@@ -1338,11 +1334,11 @@ xaxt="n",
 col=ifelse(HAPDf$num ==0, "green", "blue"), pch=19,
 las=1)
 #trestbps
-hist(HAPDf$trestbps[HAPDf$num==0],
-col=c("blue"), xlab="trestbps", ylab="Frequency", main="J",
-xlim=c(0,180), ylim=c(0, 150),
-las=1,
-breaks = 10)
+#hist(HAPDf$trestbps[HAPDf$num==0],
+#col=c("blue"), xlab="trestbps", ylab="Frequency", main="J",
+#xlim=c(0,180), ylim=c(0, 150),
+#las=1,
+#breaks = 10)
 hist(HAPDf$trestbps[HAPDf$num==1],
 col=c("blue"), xlab="trestbps", ylab="Frequency", main="K",
 xlim=c(0,180), ylim=c(0, 150),
@@ -1539,8 +1535,8 @@ colnames(AuSDf)
 
 levels(AuSDf$Class.ASD)
 #levels are NO and Yes, let's convert this to 0 for No and 1 for yes
-levels(AuSDf$Class.ASD)[1] <-0
-levels(AuSDf$Class.ASD)[2]<-1
+levels(AuSDf$Class.ASD)[1] <-0 #uncomment if dataset is reloaded
+levels(AuSDf$Class.ASD)[2]<-1 #uncomment if dataset is reloaded
 levels(AuSDf$Class.ASD)
 
 
@@ -1556,7 +1552,7 @@ levels(AuSDf$age_desc)
 levels(AuSDf$relation)
 
 AuSDf[!complete.cases(AuSDf),]
-save(AuSDf, file="AuSDf.rda")
+
 #visualisation
 ## barplots
 #table(AuSDf$contry_of_res, AuSDf$Class.ASD)  ## get the cross tab
@@ -1584,12 +1580,12 @@ colnames(FertDf)
 #levels in class labels
 levels(FertDf$Diagnosis)
 #change levels to 0 for Normal and 1 for Altered
-levels(FertDf$Diagnosis)[1] <- 1
-levels(FertDf$Diagnosis)[2] <- 0
+levels(FertDf$Diagnosis)[1] <- 1 ##uncomment if dataset is reloaded
+levels(FertDf$Diagnosis)[2] <- 0 #uncomment if dataset is reloaded
 levels(FertDf$Diagnosis)
 
 FertDf[!complete.cases(FertDf),]
-save(FertDf, file="FertDf.rda")
+
 #class distribution
 FertDfCount <- table(FertDf$Diagnosis)
 ```
@@ -1759,4 +1755,17 @@ ggsave("figure4_1.png",  width = 16, height = 10, dpi = 160)
 
 ```
 
+```{r saving modified df as csv}
+write.csv(BCDf, file = "BCDf.csv")
+write.csv(LiverDf, file = "LiverDf.csv")
+write.csv(AlzDf, file = "AlzDf.csv")
+write.csv(DiabetesDf, file = "DiabetesDf.csv")
+write.csv(HAPDf, file = "HAPDf.csv")
+write.csv(LBPDf, file = "LBPDf.csv")
+write.csv(AuSDf, file = "AuSDf.csv")
+write.csv(CCDf, file = "CCDf.csv")
+write.csv(FertDf, file = "FertDf.csv")
+
+
+```
 
