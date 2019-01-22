@@ -321,7 +321,37 @@ for (i in 1:10){
 resultsLiv
 
 #FertDf2
+ntrees<-500
+resultsFert <- data.frame(NTrees=as.numeric(), Accuracy=as.numeric(), AUC=as.numeric()) #, F1=as.numeric()
+#fit randomForest 10 times and store the results 
+#vary the number of trees in every iteration
+colnames(FertDf_train)
+colnames(FertDf_test)
+
+#convert the class label as a factor
+FertDf_train$Diagnosis <- as.factor((FertDf_train$Diagnosis))
+FertDf_test$Diagnosis <- as.factor((FertDf_test$Diagnosis))
+
+for (i in 1:10){
+  RFModelFert <-randomForest(FertDf_train[, -ncol(FertDf_train)], #class label is last column
+                             FertDf_train[, ncol(FertDf_train)], 
+                             xtest=FertDf_test[, -ncol(FertDf_test)], 
+                             ytest=FertDf_test[, ncol(FertDf_test)], 
+                             ntree = ntrees,
+                             proximity = TRUE
+                        )
+  #test the model for this run
+  predsFert <- levels(FertDf_train[, ncol(FertDf_train)])[RFModelFert$test$predicted] #compute accuracy
+  print(predsFert)
+  accuFertRF <-(sum(predsFert==FertDf_test[, ncol(FertDf_test)])/nrow(FertDf_test))*100 
+  #F1BC <-f1Score(BCDf_test$diagnosis, preds,0.5)
+  resultsFert<- rbind(resultsFert, data.frame(NTrees=ntrees,Accuracy=accuFertRF)) #, F1= F1BC
+  ntrees <- ntrees + 100 
+}#end for loop
+
+resultsFert
 #HAPDf2
+
 #LBPDf2
 
 
