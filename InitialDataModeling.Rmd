@@ -131,7 +131,7 @@ LBPDf_shuff <- LBPDf2[sample(nrow(LBPDf2)),]
 #split the data
 inTrainLBPDf <- createDataPartition(y=LBPDf_shuff$Class_label, p=0.75, list =FALSE)
 LBPDf_train <-LBPDf_shuff[inTrainLBPDf,]
-LBPDf_test <- HAPDf_shuff[-inTrainLBPDf,]
+LBPDf_test <- LBPDf_shuff[-inTrainLBPDf,]
 dim(LBPDf_test)
 dim(LBPDf_train)
 
@@ -401,6 +401,37 @@ resultsHAP
 
 
 #LBPDf2
+
+ntrees<-500
+resultsLBP <- data.frame(NTrees=as.numeric(), Accuracy=as.numeric(), AUC=as.numeric()) #, F1=as.numeric()
+#fit randomForest 10 times and store the results 
+#vary the number of trees in every iteration
+colnames(LBPDf_train)
+colnames(LBPDf_test)
+head(LBPDf_train)
+
+#convert the class label as a factor
+LBPDf_train$Class_label <- as.factor((LBPDf_train$Class_label))
+LBPDf_test$Class_label <- as.factor((LBPDf_test$Class_label))
+
+for (i in 1:10){
+  RFModelLBP <-randomForest(LBPDf_train[, -ncol(LBPDf_train)], #class label is last column
+                            LBPDf_train[, ncol(LBPDf_train)], 
+                            xtest=LBPDf_test[, -ncol(LBPDf_test)], 
+                            ytest=LBPDf_test[, ncol(LBPDf_test)], 
+                            ntree = ntrees,
+                            proximity = TRUE
+                        )
+  #test the model for this run
+  predsLBP <- levels(LBPDf_train[, ncol(LBPDf_train)])[RFModelLBP$test$predicted] #compute accuracy
+  print(predsLBP)
+  accuLBPRF <-(sum(predsLBP==LBPDf_test[, ncol(LBPDf_test)])/nrow(LBPDf_test))*100 
+  #F1BC <-f1Score(BCDf_test$diagnosis, preds,0.5)
+  resultsLBP<- rbind(resultsLBP, data.frame(NTrees=ntrees,Accuracy=accuLBPRF)) #, F1= F1BC
+  ntrees <- ntrees + 100 
+}#end for loop
+
+resultsLBP
 
 
 #randomForest(x, y=NULL,  xtest=NULL, ytest=NULL, ntree=500,proximity)
