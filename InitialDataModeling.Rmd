@@ -290,7 +290,35 @@ for (i in 1:10){
 resultsDiab
 
 #LiverDf2
+ntrees<-500
+resultsLiv <- data.frame(NTrees=as.numeric(), Accuracy=as.numeric(), AUC=as.numeric()) #, F1=as.numeric()
+#fit randomForest 10 times and store the results 
+#vary the number of trees in every iteration
+colnames(LiverDf_train)
+colnames(LiverDf_test)
 
+#convert the class label as a factor
+LiverDf_train$Dataset <- as.factor((LiverDf_train$Dataset))
+LiverDf_test$Dataset <- as.factor((LiverDf_test$Dataset))
+
+for (i in 1:10){
+  RFModelLiver <-randomForest(LiverDf_train[, -ncol(LiverDf_train)], #class label is last column
+                              LiverDf_train[, ncol(LiverDf_train)], 
+                              xtest=LiverDf_test[, -ncol(LiverDf_test)], 
+                              ytest=LiverDf_test[, ncol(LiverDf_test)], 
+                              ntree = ntrees,
+                              proximity = TRUE
+                        )
+  #test the model for this run
+  predsLiv <- levels(LiverDf_train[, ncol(LiverDf_train)])[RFModelLiver$test$predicted] #compute accuracy
+  print(predsLiv)
+  accuLivRF <-(sum(predsLiv==LiverDf_test[, ncol(LiverDf_test)])/nrow(LiverDf_test))*100 
+  #F1BC <-f1Score(BCDf_test$diagnosis, preds,0.5)
+  resultsLiv<- rbind(resultsLiv, data.frame(NTrees=ntrees,Accuracy=accuLivRF)) #, F1= F1BC
+  ntrees <- ntrees + 100 
+}#end for loop
+
+resultsLiv
 
 #FertDf2
 #HAPDf2
