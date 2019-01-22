@@ -7,10 +7,150 @@ This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute
 
 Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
 
-```{r}
+```{r dataframes loading}
+
+setwd("/Users/annabelle/Documents/school/HonoursYear/HonoursProject/HonoursProjectCode")
+list.files()
+
+#load the csv as df
+BCDf2 <- read.csv(file = "BCDf.csv", header=TRUE, sep=",")
+AlzDf2 <- read.csv(file = "AlzDf.csv", header = TRUE, sep=",")
+CCDf2 <- read.csv(file = "CCDf.csv", header = TRUE, sep = ",")
+AuSDf2 <- read.csv(file = "AuSDf.csv", header = TRUE, sep= ",")
+DiabetesDf2 <- read.csv(file = "DiabetesDf.csv", header = TRUE, sep = ",")
+LiverDf2 <- read.csv(file = "LiverDf.csv", header = TRUE, sep = ",")
+FertDf2 <- read.csv(file = "FertDf.csv", header = TRUE, sep = ",")
+HAPDf2 <- read.csv(file = "HAPDf.csv", header = TRUE, sep = ",")
+LBPDf2 <- read.csv(file = "LBPDf.csv", header = TRUE, sep = ",")
+
+
+```
+```{r check the data}
+summary(BCDf2)
+summary(AlzDf2)
+summary(CCDf2)
+summary(AuSDf2)
+summary(DiabetesDf2)
+summary(LiverDf2)
+summary(FertDf2)
+summary(HAPDf2)
+summary(LBPDf2)
+```
+
+```{r Training and testing sets}
+
+# use caret
+library(caret)
+#BCDf
+#drop column X
+BCDf2<-subset(BCDf2,select=c(- X))
+colnames(BCDf2)
+#shuffle the data
+BCDf_shuff <- BCDf2[sample(nrow(BCDf2)),]
+#split the BCDf data
+inTrain <- createDataPartition(y = BCDf_shuff$diagnosis, p=0.75, list = FALSE)
+BCDf_train <- BCDf_shuff[inTrain, ]
+BCDf_test <- BCDf_shuff[-inTrain, ]
+dim(BCDf_train)
+dim(BCDf_test)
+
+#AlzDf
+AlzDf_shuff <-AlzDf2[sample(nrow(AlzDf2)),]
+dim(AlzDf_shuff)
+inTrainAlz <- createDataPartition(y= AlzDf_shuff$Group, p = 0.75, list = FALSE)
+AlzDf_train <- AlzDf_shuff[inTrainAlz,]
+AlzDf_test <- AlzDf_shuff[-inTrainAlz,]
+dim(AlzDf_train)
+dim(AlzDf_test)
+
+#CCDf
+#only use the label biopsy
+# drop the other labels
+#CCDf2 <- subset(CCDf2, select= c(-))
+
+#AuSDf
+summary(AuSDf2)
+head(AuSDf2)
+#drop column X
+AuSDf2<-subset(AuSDf2,select=c(- X))
+colnames(AuSDf2)
+AuSDf_shuff <- AuSDf2[sample(nrow(AuSDf2)),]
+#split the data
+inTrainAu <- createDataPartition(y=AuSDf_shuff$Class.ASD, p=0.75, list =FALSE)
+AuSDf_train <- AuSDf_shuff[inTrainAu,]
+AuSDf_test <- AuSDf_shuff[-inTrainAu,]
+dim(AuSDf_test)
+dim(AuSDf_train)
+
+#LiverDf
+colnames(LiverDf2)
+head(LiverDf2)
+#drop column X
+LiverDf2<-subset(LiverDf2,select=c(- X))
+colnames(LiverDf2)
+LiverDf_shuff <- LiverDf2[sample(nrow(LiverDf2)),]
+#split the data
+inTrainLiver <- createDataPartition(y=LiverDf_shuff$Dataset, p=0.75, list =FALSE)
+LiverDf_train <- LiverDf_shuff[inTrainLiver,]
+LiverDf_test <- LiverDf_shuff[-inTrainLiver,]
+dim(LiverDf_test)
+dim(LiverDf_train)
+#DiabetesDF
+colnames(DiabetesDf2)
+#drop column X
+DiabetesDf2<-subset(DiabetesDf2,select=c(- X))
+colnames(DiabetesDf2)
+DiabetesDf_shuff <- DiabetesDf2[sample(nrow(DiabetesDf2)),]
+#split the data
+inTrainDiab <- createDataPartition(y=DiabetesDf_shuff$Outcome, p=0.75, list =FALSE)
+DiabetesDf_train <- DiabetesDf_shuff[inTrainDiab,]
+DiabetesDf_test <- DiabetesDf_shuff[-inTrainDiab,]
+dim(DiabetesDf_test)
+dim(DiabetesDf_train)
+#HAPDf
+colnames(HAPDf2)
+#drop column X
+HAPDf2<-subset(HAPDf2,select=c(- X))
+colnames(HAPDf2)
+HAPDf_shuff <- HAPDf2[sample(nrow(HAPDf2)),]
+#split the data
+inTrainHAPDf <- createDataPartition(y=HAPDf_shuff$num, p=0.75, list =FALSE)
+HAPDf_train <-HAPDf_shuff[inTrainHAPDf,]
+HAPDf_test <- HAPDf_shuff[-inTrainHAPDf,]
+dim(HAPDf_test)
+dim(HAPDf_train)
+
+#LBPDF
+colnames(LBPDf2)
+#drop column X
+LBPDf2<-subset(LBPDf2,select=c(- X, -X.1))
+colnames(LBPDf2)
+LBPDf_shuff <- LBPDf2[sample(nrow(LBPDf2)),]
+#split the data
+inTrainLBPDf <- createDataPartition(y=LBPDf_shuff$Class_label, p=0.75, list =FALSE)
+LBPDf_train <-LBPDf_shuff[inTrainLBPDf,]
+LBPDf_test <- HAPDf_shuff[-inTrainLBPDf,]
+dim(LBPDf_test)
+dim(LBPDf_train)
+
+#FertDf
+colnames(FertDf2)
+#drop column X
+FertDf2<-subset(FertDf2,select=c(- X))
+colnames(FertDf2)
+FertDf_shuff <- FertDf2[sample(nrow(FertDf2)),]
+#split the data
+inTrainFertDf <- createDataPartition(y=FertDf_shuff$Diagnosis, p=0.75, list =FALSE)
+FertDf_train <-FertDf_shuff[inTrainFertDf,]
+FertDf_test <- FertDf_shuff[-inTrainFertDf,]
+dim(FertDf_test)
+dim(FertDf_train)
+
+
+
+
+```
+```{r Random forest modelling}
 
 ```
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
-
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file).
