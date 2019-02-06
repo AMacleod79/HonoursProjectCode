@@ -68,8 +68,16 @@ levels(BCDf$diagnosis)
 head(BCDf)
 BCDf[!complete.cases(BCDf),]
 #only missing data is in the X column (not used)
+#remove unused column
+BCDf <-subset(BCDf,select=c(- X))
+#put class label at the end
+#df <- df[, c(col_idx, (1:ncol(df))[-col_idx])]
+BCDf$Label <- BCDf$diagnosis
+BCDf <- subset(BCDf, select=c(-diagnosis))
+names(BCDf)
 # class distribution
 BCCounts <- table(BCDf$diagnosis)
+
 
 # show distribution of each mean column
 BCAreaMCounts <- density(BCDf$area_mean)
@@ -954,6 +962,7 @@ las=1)
 ```
 
 ```{r Cervical Cancer Dataset}
+
 cat("Shape of CCDf is: ", dim(CCDf))
 head(CCDf)
 summary(CCDf)
@@ -963,7 +972,9 @@ CCDf[!complete.cases(CCDf),]
 
 #class distribution
 #there are four labels here (Hinselmann, Schiller, Citology and Biopsy) already expressed numerically as 0 or 1
-# choose biopsy
+#make new composite target label
+CCDf$Label <- round((CCDf$Hinselmann +CCDf$Schiller + CCDf$Citology + CCDf$Biopsy)/4)
+
 CCDfCount <- table(CCDf$Biopsy)
 
 #perhaps need to consider only one or aggregate as 1?
@@ -1009,7 +1020,7 @@ levels(LBPDf$Class_label)
 levels(LBPDf$Class_label)[1] <- 1 #uncomment if dataset is reloaded
 levels(LBPDf$Class_label)[2] <-0 #uncomment if dataset is reloaded
 levels(LBPDf$Class_label)
-
+LBPDf <- subset(LBPDf, select = c(-X))
 
 LBPDf[!complete.cases(LBPDf),]
 
@@ -1552,6 +1563,14 @@ levels(AuSDf$age_desc)
 levels(AuSDf$relation)
 
 AuSDf[!complete.cases(AuSDf),]
+levels(AuSDf$contry_of_res)
+#there are 65 possible country of residence, RF only supports up to 53
+#consider that country of residence may not have an impact on autism diagnostic and drop the column?
+#drop the contry of residence in train and test
+#or convert to string 
+# returns an error (see unusued code at bottom of notebook)
+
+AuSDf<-subset(AuSDf,select=c(- contry_of_res))
 
 #visualisation
 ## barplots
@@ -1614,7 +1633,7 @@ barplot(DiabetesDfCount, col=c("blue"),
         xlab = "Pima Indian Diabetes Distribution",
         ylab = "Frequency",
         main = "D")
-barplot(table(CCDf$Biopsy), col=c("blue"), #using biopsy column for now
+barplot(table(CCDf$label), col=c("blue"), 
         xlab = "Cervical cancer diagnosis distribution",
         ylab = "Frequency",
         main = "E")
@@ -1647,10 +1666,10 @@ dev.off()
 numRowBC <-nrow(BCDf) #[BCDf$diagnosis ==0])
 print(numRowBC,  digits = 5)
 #maxClassBC
-numMaxRowBC <- nrow(BCDf[BCDf$diagnosis ==0,])
+numMaxRowBC <- nrow(BCDf[BCDf$Label ==0,])
 print(numMaxRowBC)
 #minClassBC
-numRowMinBC <- nrow(BCDf[BCDf$diagnosis==1,])
+numRowMinBC <- nrow(BCDf[BCDf$Label==1,])
 print(numRowMinBC)
 #convert to percentage
 numRowMinBC<- numRowMinBC * 100 / numRowBC
@@ -1673,8 +1692,8 @@ numMaxRowDiab <- 100*(nrow(DiabetesDf[DiabetesDf$Outcome==0,]))/numRowDiab
 numMinRowDiab <- 100*(nrow(DiabetesDf[DiabetesDf$Outcome==1,]))/numRowDiab
 #Cervical cancre dataset
 numRowCC <- nrow(CCDf)
-numMinRowCC <- 100*(nrow(CCDf[CCDf$Biopsy==1,]))/numRowCC
-numMaxRowCC <- 100*(nrow(CCDf[CCDf$Biopsy ==0,]))/numRowCC
+numMinRowCC <- 100*(nrow(CCDf[CCDf$Label==1,]))/numRowCC
+numMaxRowCC <- 100*(nrow(CCDf[CCDf$Label==0,]))/numRowCC
 #Low back pain
 numRowLBP <- nrow(LBPDf)
 numMinLBP <- 100*(nrow(LBPDf[LBPDf$Class_label==1,]))/numRowLBP
@@ -1756,15 +1775,15 @@ ggsave("figure4_1.png",  width = 16, height = 10, dpi = 160)
 ```
 
 ```{r saving modified df as csv}
-write.csv(BCDf, file = "BCDf.csv")
-write.csv(LiverDf, file = "LiverDf.csv")
-write.csv(AlzDf, file = "AlzDf.csv")
-write.csv(DiabetesDf, file = "DiabetesDf.csv")
-write.csv(HAPDf, file = "HAPDf.csv")
-write.csv(LBPDf, file = "LBPDf.csv")
-write.csv(AuSDf, file = "AuSDf.csv")
-write.csv(CCDf, file = "CCDf.csv")
-write.csv(FertDf, file = "FertDf.csv")
+write.csv(BCDf, file = "ModellingDatasets/BCDf.csv")
+write.csv(LiverDf, file = "ModellingDatasets/LiverDf.csv")
+#write.csv(AlzDf, file = "ModellingDatasets/AlzDf.csv")
+write.csv(DiabetesDf, file = "ModellingDatasets/DiabetesDf.csv")
+write.csv(HAPDf, file = "ModellingDatasets/HAPDf.csv")
+write.csv(LBPDf, file = "ModellingDatasets/LBPDf.csv")
+write.csv(AuSDf, file = "ModellingDatasets/AuSDf.csv")
+write.csv(CCDf, file = "ModellingDatasets/CCDf.csv")
+write.csv(FertDf, file = "ModellingDatasets/FertDf.csv")
 
 
 ```
