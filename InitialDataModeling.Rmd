@@ -155,10 +155,10 @@ dim(FertDf_train)
 ```{r Random forest modelling}
 library(randomForest)
 library(ModelMetrics)
-
+set.seed(145)
 #BCDf2
 #number of initial trees
-ntrees<-500
+ntrees<-1300
 #create a dataframe to store the accuracies and corresponding number of trees and other metrics
 resultsBC <- data.frame(NTrees=as.numeric(), Accuracy=as.numeric(), F1=as.numeric(), Recall = as.numeric()) #
 #fit randomForest 10 times and store the results 
@@ -167,7 +167,7 @@ colnames(BCDf_train)
 colnames(BCDf_test)
 BCDf_train$diagnosis <- as.factor(BCDf_train$diagnosis)
 BCDf_test$diagnosis <- as.factor((BCDf_test$diagnosis))
-for (i in 1:10){
+#for (i in 1:10){
   RFModelBC <-randomForest(BCDf_train[, -2],
                           BCDf_train[, 2], 
                           xtest=BCDf_test[, -2], 
@@ -176,25 +176,34 @@ for (i in 1:10){
                          proximity = TRUE
                         )
   #test the model for this run
-  preds <- levels(BCDf_train[, 2])[RFModelBC$test$predicted] #
-  actual <- levels(BCDf_train[, 2])[RFModelBC$test$err.rate]
+  preds <- levels(BCDf_test[, 2])[RFModelBC$test$predicted]
+  RFModelBC
+ 
+  
   print(preds)
-  print(actual)
-  print(confusionMatrix(BCDf_test$diagnosis, RFModelBC$test$predicted,0.5))
+ 
+  confDf <- confusionMatrix(BCDf_test$diagnosis, RFModelBC$test$predicted,0.5)
+  dim(confDf)
+  confDf
   #compute accuracy
   accuRF <-(sum(preds==BCDf_test[, 2])/nrow(BCDf_test))*100
+  accuRF
+  
   #precision Precision = TP/TP+FP
   preciBC <- precision(BCDf_test$diagnosis, RFModelBC$test$predicted, 0.5)
-  precBC <- sum()
+  preciBC
+  #precBC <- sum()
   # Recall Recall = TP/TP+FN
   
   #F1 Score = 2*(Recall * Precision) / (Recall + Precision)
-  F1BC <- (sum())
-  #F1BC <-f1Score(BCDf_test$diagnosis, RFModelBC$test$predicted,0.5)
+  #F1BC <- (sum())
+  F1BC <-f1Score(BCDf_test$diagnosis, RFModelBC$test$predicted,0.5)
+  F1BC
   recallBC <- recall(BCDf_test$diagnosis, RFModelBC$test$predicted, 0.5)
+  recallBC
   resultsBC<- rbind(resultsBC, data.frame(NTrees=ntrees,Accuracy=accuRF, F1= F1BC, Recall = recallBC)) #, 
-  ntrees <- ntrees + 100 
-}#end for loop
+  #ntrees <- ntrees + 100 
+#}#end for loop
 
 
 resultsBC
@@ -450,6 +459,50 @@ resultsLBP
 
 ```
 ```{r export datasets as csv}
+library("e1071")
+```
+```{r SVM}
+# svm(x, y = NULL, scale = TRUE, type = NULL, kernel =
+# "radial", degree = 3, gamma = if (is.vector(x)) 1 else 1 / ncol(x),
+# coef0 = 0, cost = 1, nu = 0.5,
+# class.weights = NULL, cachesize = 40, tolerance = 0.001, epsilon = 0.1,
+# shrinking = TRUE, cross = 0, probability = FALSE, fitted = TRUE,
+# ..., subset, na.action = na.omit)
+
+#svm model for BC dataset
+colnames(BCDf_train)
+colnames(BCDf_test)
+
+
+SVMBC <- svm(BCDf_train[, -2], 
+             BCDf_train$diagnosis, 
+             scale = TRUE, 
+             type = NULL, 
+             kernel = "radial")
+
+print(SVMBC)
+summary(SVMBC)
+
+# test with train data
+pred <- predict(SVMBC, BCDf_train[,-2])
+# (same as:)
+pred <- fitted(SVMBC)
+
+# Check accuracy:
+table(pred, BCDf_train[,2])
+
+# compute decision values and probabilities:
+pred <- predict(SVMBC, BCDf_train[,-2], decision.values = TRUE)
+attr(pred, "decision.values")[1:4,]
+
+# visualize (classes by color, SV by crosses):
+plot(cmdscale(dist(BCDf_train[,-2])),
+     col = as.integer(BCDf_train[,2]),
+     pch = c("o","+")[1:150 %in% SVMBC$index + 1])
+
+
+
+
 
 ```
 
