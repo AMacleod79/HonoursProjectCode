@@ -23,7 +23,8 @@ datasetUpload <- function(){
     names(dfList) <- dfNameList
   }
   
-  return (dfList)
+  return (list(dfList,dfNameList))
+  
 }#end function
 
 datasetUpload()

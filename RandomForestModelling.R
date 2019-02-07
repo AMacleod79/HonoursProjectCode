@@ -5,7 +5,7 @@ setwd("/Users/annabelle/Documents/school/HonoursYear/HonoursProject/HonoursProje
 source("Scripts/Train_Test_Split.R") #import the train_test_split function
 
 #create a function to run random forest
-runRandomForest <- function (dfList, partition = 0.7, ntrees = 1000){
+runRandomForest <- function (dfList, dbNames, partition = 0.7, ntrees = 1000){
   #create a dataframe to hold the results
   RF_results <- data.frame(Dataset=as.character(), 
                            Accuracy=as.numeric(),
