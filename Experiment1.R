@@ -20,9 +20,10 @@ RF_results2
 # sensitivity
 
 write.csv(RF_results2, file = "RF_results1.csv")
+####### This code to produce Latex code to reproduce the table ########
 x <- read.csv('RF_results1.csv')
 x$X = NULL
 library(xtable)
 print(xtable(x),include.rownames = FALSE)
-#######
+##########################################################################
 
