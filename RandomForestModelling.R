@@ -10,7 +10,8 @@ runRandomForest <- function (dfList, dbNames, partition = 0.7, ntrees = 1000){
   RF_results <- data.frame(Dataset=as.character(), 
                            Accuracy=as.numeric(),
                            Sensitivity = as.numeric(),
-                           Specificity= as.numeric())
+                           Precision= as.numeric(),
+                           F1Score = as.numeric())
   
   #iterate through the list of datasets
   for(index in 1:length(dfList)){
@@ -41,13 +42,15 @@ runRandomForest <- function (dfList, dbNames, partition = 0.7, ntrees = 1000){
     RF_confMat <- confusionMatrix(predictions, testDf[, ncol(testDf)], "1")
     perfMetrics <- RF_confMat$byClass
     RF_sens <- perfMetrics[1]
-    RF_spec <- perfMetrics[2]
+    RF_prec <- perfMetrics[3]
+    RF_F1Score <- 2 * (RF_prec*RF_sens)/(RF_prec+RF_sens)
    
     # #add results to dataframe results
-    RF_results <- rbind(RF_results, data.frame(Dataset = deparse(substitute(dfList[index])),
+    RF_results <- rbind(RF_results, data.frame(Dataset = dbNames[[index]],
                                                Accuracy=RF_accur,
                                                Sensitivity = RF_sens,
-                                               Specificity= RF_spec))
+                                               Precision= RF_prec,
+                                               F1Score = RF_F1Score))
     
   }#end for loop
   
