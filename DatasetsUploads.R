@@ -7,7 +7,7 @@ datasetUpload <- function(){
   #check if there are more than one file
   if(length(filenames)>1){
     #add each dataset to list as dataframe
-    dfList = sapply(filenames, read.csv,stringsAsFactors=FALSE)
+    dfList = sapply(filenames, read.csv,stringsAsFactors=TRUE) #here change to true and upload so that factors are maintained
     #name each dataframe as the csv file
     #list of names
     dfNameList <- names(dfList)
@@ -17,7 +17,7 @@ datasetUpload <- function(){
   }
   else{     
     #if only file in the folder
-    dfList[[1]] <- read.csv(filenames, stringsAsFactors=FALSE)
+    dfList[[1]] <- read.csv(filenames, stringsAsFactors=TRUE)
     dfNameList<- basename(filenames) 
     dfNameList<- gsub(".csv", "", dfNameList, fixed = TRUE)
     names(dfList) <- dfNameList
