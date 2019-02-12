@@ -299,7 +299,7 @@ cat("Shape of LiverDf is: ", dim(LiverDf))
 head(LiverDf)
 summary(LiverDf)
 colnames(LiverDf)
-
+str(LiverDf)
 #class distribution
 
 
@@ -319,6 +319,8 @@ LiverDf[!complete.cases(LiverDf),]
 LiverDf$Albumin_and_Globulin_Ratio[is.na(LiverDf$Albumin_and_Globulin_Ratio)] <- 0.9471
 LiverDf[!complete.cases(LiverDf),]
 
+
+#--------------------------------------------------------------------------------
 
 
 #variable against label visualisation
@@ -962,13 +964,66 @@ las=1)
 ```
 
 ```{r Cervical Cancer Dataset}
+CCDf <- read.csv(file="Datasets/kag_risk_factors_cervical_cancer.csv", header = TRUE, sep=",")
 
 cat("Shape of CCDf is: ", dim(CCDf))
 head(CCDf)
 summary(CCDf)
 colnames(CCDf)
+str(CCDf)
+
 CCDf[!complete.cases(CCDf),]
-# missing data is imputed with ?
+
+# reduce the number of factors so as not exceed 53 for RF
+levels <- as.numeric(levels(CCDf$Smokes..packs.year.))
+levels
+
+library(dplyr)
+CCDf <-mutate(CCDf, Pack_per_year = )
+
+
+for( i in 1:length(levels)){
+  if(!is.na(levels[[i]])){
+    print(levels[[i]])
+    levels[[i]] <- round(levels[[i]])
+  }
+  # else{
+  #   levels[[i]]<- "?"
+  # }
+}
+levels
+newLevels <- list()
+for(i in 1:length(levels)){
+  if(!levels[[i]]%in% newLevels){
+    if(is.na(levels[[i]])){
+      newLevels[[i]] <- "?"
+    }
+    else{
+      newLevels[[i]] <- levels[[i]]
+    }
+  
+    
+  }
+}
+newLevels
+
+#need to remove all null value
+
+
+
+#convert the column from factor to numeric 
+
+values <- CCDf$Pack_per_year
+values
+levels <- c()
+
+#create a new column to hold the  new levels
+newLevels <-c("0.5", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", )
+CCDf$SmPack_yearNew <- NA
+levels(CCDf$SmPack_yearNew)<- 
+
+
+levels(CCDf$Smokes..packs.year.)
 
 #class distribution
 #there are four labels here (Hinselmann, Schiller, Citology and Biopsy) already expressed numerically as 0 or 1
@@ -1266,11 +1321,13 @@ las=1)
 
 
 ```{r Heart Attack dataset}
+HAPDf <- read.csv(file = "Datasets/HeartAttackData.csv", header = TRUE, sep=",")
 cat("Shape of HAPDf is: ", dim(HAPDf))
 head(HAPDf)
 summary(HAPDf)
 colnames(HAPDf)
 cat(HAPDf$trestbps)
+str(HAPDf)
 
 # this appears to contain only the hungarian database (number of rows)
 #class labels is expressed as 0 (no heart disease) or 1 -4 (heart disease ) in the num column
@@ -1285,6 +1342,144 @@ HAPDf[!complete.cases(HAPDf),]
 
 #class distribution
 HAPDfCount <- table(HAPDf$num)
+
+# reduce number of factors for cholesterol (there are 154)
+level4 <-as.numeric(levels(HAPDf$chol))
+level4
+#iterate through the levels
+for (i in 1:length(level4)){
+  print(level4[i])
+  if(is.na(level4[i])){
+    levels(HAPDf$chol)[i]<- "?"
+  }#end if
+  else {
+    if(level4[i]>100 & level4[i]<110){
+      print("100-110")
+        levels(HAPDf$chol)[i]<- 105
+    }
+    else if (level4[i]>=110 & level4[i]<120){
+      print("110-120")
+        levels(HAPDf$chol)[i]<- 115
+    }
+    else if(level4[i]>=120 & level4[i]<130){
+      print("120-130")
+        levels(HAPDf$chol)[i]<- 125
+    }
+    else if(level4[i]>=130 & level4[i]<140){
+      print("130-140")
+        levels(HAPDf$chol)[i] <- 135
+    }
+    else if(level4[i]>=140 & level4[i]<150){
+      print("140-150")
+        levels(HAPDf$chol)[i]<- 145
+    }
+    else if(level4[i]>=150 & level4[i]<160){
+      print("150-160")
+        levels(HAPDf$chol)[i] <- 155
+    }
+    else if(level4[i]>=160 & level4[i]<170){
+        print("160-170")
+          levels(HAPDf$chol)[i]<-165
+    }
+    else if(level4[i]>=170 & level4[i]<180){
+      print("170-180")
+        levels(HAPDf$chol)[i]<-175
+    }
+    else if(level4[i]>=180 & level4[i]<190){
+      print("190-180")
+        levels(HAPDf$chol)[i]<-185
+    }
+    else if(level4[i]>=190 & level4[i] <200){
+      print("190-200")
+        levels(HAPDf$chol)[i]<-195
+    }
+    else if(level4[i]>=200 & level4[i]<210){
+        levels(HAPDf$chol)[i]<-205
+    }
+    else if(level4[i]>=210 & level4[i]<220){
+      print("215")
+      levels(HAPDf$chol)[i]<-215
+    }
+    else if(level4[i]>=220 & level4[i]<230){
+      print("225")
+      levels(HAPDf$chol)[i]<- 225
+    }
+    else if(level4[i]>=230 & level4[i]<240){
+      print("235")
+      levels(HAPDf$chol)[i]<- 235
+    }
+    else if(level4[i]>=240 & level4[i]<250){
+      print("245")
+      levels(HAPDf$chol)[i]<- 245
+    }
+    else if(level4[i]>=250 & level4[i]<260){
+      levels(HAPDf$chol)[i]<- 255
+    }
+    else if(level4[i]>=260 & level4[i]<270){
+      print("265")
+      levels(HAPDf$chol)[i]<- 265
+    }
+    else if(level4[i]>=270 & level4[i]<280){
+      print("275")
+      levels(HAPDf$chol)[i]<- 275
+    }
+    else if(level4[i]>=280 & level4[i]<290){
+      print("285")
+      levels(HAPDf$chol)[i]<- 285
+    }
+    else if(level4[i]>=290 & level4[i]<300){
+      print("295")
+      levels(HAPDf$chol)[i]<- 295
+    }
+    else if(level4[i]>=300 & level4[i]<310){
+      print("305")
+        levels(HAPDf$chol)[i]<- 305
+    }
+    else if(level4[i]>=310 & level4[i]<320){
+      print("315")
+        levels(HAPDf$chol)[i]<- 315
+    }
+    else if(level4[i]>=320 & level4[i]<330){
+      print("325")
+        levels(HAPDf$chol)[i]<- 325
+    }
+    else if(level4[i]>=330 & level4[i]<340){
+      print("335")
+        levels(HAPDf$chol)[i]<- 335
+    }
+    else if(level4[i]>=340 & level4[i]<350){
+      print("345")
+        levels(HAPDf$chol)[i]<- 345
+    }
+    else if(level4[i]>=350 & level4[i]<360){
+      print("355")
+        levels(HAPDf$chol)[i]<- 355
+    }
+    else if(level4[i]>=360 & level4[i]<370){
+      print("365")
+        levels(HAPDf$chol)[i]<- 365
+    }
+    else if(level4[i]>=370 & level4[i]<380){
+      print("375")
+        levels(HAPDf$chol)[i]<- 375
+    }
+    else if(level4[i]>=380 & level4[i]<390){
+      print("385")
+        levels(HAPDf$chol)[i]<- 385
+    }
+    else if(level4[i]>=390 & level4[i]<400){
+      print("395")
+        levels(HAPDf$chol)[i]<- 395
+    }
+    else{
+      levels(HAPDf$chol)[i]<-level4[i]
+    }
+    
+  }#end else
+ # need to check if the levels are changing appropriately 
+  print(levels(HAPDf$chol)[i])
+}
+levels(HAPDf$chol)
 
 
 #data visualisation
@@ -1595,6 +1790,7 @@ cat("Shape of FertDf is: ", dim(FertDf))
 head(FertDf)
 summary(FertDf)
 colnames(FertDf)
+str(FertDf)
 
 #levels in class labels
 levels(FertDf$Diagnosis)
@@ -1784,6 +1980,7 @@ write.csv(LBPDf, file = "ModellingDatasets/LBPDf.csv")
 write.csv(AuSDf, file = "ModellingDatasets/AuSDf.csv")
 write.csv(CCDf, file = "ModellingDatasets/CCDf.csv")
 write.csv(FertDf, file = "ModellingDatasets/FertDf.csv")
+write.
 
 
 ```
