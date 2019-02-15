@@ -975,55 +975,172 @@ str(CCDf)
 CCDf[!complete.cases(CCDf),]
 
 # reduce the number of factors so as not exceed 53 for RF
-levels <- as.numeric(levels(CCDf$Smokes..packs.year.))
-levels
-
-library(dplyr)
-CCDf <-mutate(CCDf, Pack_per_year = )
+#convert to numeric
+CCDf$Smokes..packs.year.<- as.numeric(as.character(CCDf$Smokes..packs.year.))
+CCDf$Smokes..packs.year.
 
 
-for( i in 1:length(levels)){
-  if(!is.na(levels[[i]])){
-    print(levels[[i]])
-    levels[[i]] <- round(levels[[i]])
-  }
-  # else{
-  #   levels[[i]]<- "?"
-  # }
-}
-levels
-newLevels <- list()
-for(i in 1:length(levels)){
-  if(!levels[[i]]%in% newLevels){
-    if(is.na(levels[[i]])){
-      newLevels[[i]] <- "?"
-    }
-    else{
-      newLevels[[i]] <- levels[[i]]
-    }
-  
-    
-  }
-}
-newLevels
-
-#need to remove all null value
-
-
-
-#convert the column from factor to numeric 
-
-values <- CCDf$Pack_per_year
-values
-levels <- c()
-
-#create a new column to hold the  new levels
-newLevels <-c("0.5", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", )
-CCDf$SmPack_yearNew <- NA
-levels(CCDf$SmPack_yearNew)<- 
-
-
+#change all values less than 1 to 0
+CCDf$Smokes..packs.year.[CCDf$Smokes..packs.year.<1] <- 0
+#change na values to mean value for the column
+CCDf$Smokes..packs.year.[is.na(CCDf$Smokes..packs.year.)]<- mean(CCDf$Smokes..packs.year., na.rm = TRUE)
+CCDf$Smokes..packs.year. <- as.factor(CCDf$Smokes..packs.year.)
 levels(CCDf$Smokes..packs.year.)
+
+#number of sexual partners
+CCDf$Number.of.sexual.partners <- as.numeric(as.character(CCDf$Number.of.sexual.partners))
+CCDf$Number.of.sexual.partners[is.na(CCDf$Number.of.sexual.partners)]<- mean(CCDf$Number.of.sexual.partners, na.rm = TRUE)
+CCDf$Number.of.sexual.partners <- as.factor((CCDf$Number.of.sexual.partners))
+
+#first sexual intercourse
+CCDf$First.sexual.intercourse <- as.numeric(as.character(CCDf$First.sexual.intercourse))
+CCDf$First.sexual.intercourse[is.na(CCDf$First.sexual.intercourse)]<- mean(CCDf$First.sexual.intercourse, na.rm = TRUE)
+CCDf$First.sexual.intercourse <- as.factor((CCDf$First.sexual.intercourse))
+levels(CCDf$First.sexual.intercourse)
+
+#number of pregnancies
+CCDf$Num.of.pregnancies <- as.numeric(as.character(CCDf$Num.of.pregnancies))
+CCDf$Num.of.pregnancies[is.na(CCDf$Num.of.pregnancies)]<- mean(CCDf$Num.of.pregnancies, na.rm = TRUE)
+CCDf$Num.of.pregnancies <- as.factor((CCDf$Num.of.pregnancies))
+levels(CCDf$Num.of.pregnancies)
+
+#smokes
+CCDf$Smokes <- as.numeric(as.character(CCDf$Smokes))
+CCDf$Smokes[is.na(CCDf$Smokes)]<- mean(CCDf$Smokes, na.rm = TRUE)
+CCDf$Smokes <- as.factor((CCDf$Smokes))
+levels(CCDf$Smokes)
+
+#smokes years
+CCDf$Smokes..years. <- as.numeric(as.character(CCDf$Smokes..years.))
+CCDf$Smokes..years.[is.na(CCDf$Smokes..years.)]<- mean(CCDf$Smokes..years., na.rm = TRUE)
+CCDf$Smokes..years. <- as.factor((CCDf$Smokes..years.))
+levels(CCDf$Smokes..years.)
+
+#hormonal contraceptive
+CCDf$Hormonal.Contraceptives <- as.numeric(as.character(CCDf$Hormonal.Contraceptives))
+CCDf$Hormonal.Contraceptives[is.na(CCDf$Hormonal.Contraceptives)]<- mean(CCDf$Hormonal.Contraceptives, na.rm = TRUE)
+CCDf$Hormonal.Contraceptives<- as.factor((CCDf$Hormonal.Contraceptives))
+levels(CCDf$Hormonal.Contraceptives)
+
+#hormonal contraceptive years
+CCDf$Hormonal.Contraceptives..years. <- as.numeric(as.character(CCDf$Hormonal.Contraceptives..years.))
+CCDf$Hormonal.Contraceptives..years.[is.na(CCDf$Hormonal.Contraceptives..years.)]<- mean(CCDf$Hormonal.Contraceptives..years., na.rm = TRUE)
+CCDf$Hormonal.Contraceptives..years.<- as.factor((CCDf$Hormonal.Contraceptives..years.))
+levels(CCDf$Hormonal.Contraceptives..years.)
+
+#IUD
+CCDf$IUD <- as.numeric(as.character(CCDf$IUD))
+CCDf$IUD[is.na(CCDf$IUD)]<- mean(CCDf$IUD, na.rm = TRUE)
+CCDf$IUD<- as.factor((CCDf$IUD))
+levels(CCDf$IUD)
+
+#IUD years
+CCDf$IUD..years. <- as.numeric(as.character(CCDf$IUD..years.))
+CCDf$IUD..years.[is.na(CCDf$IUD..years.)]<- mean(CCDf$IUD..years., na.rm = TRUE)
+CCDf$IUD..years.<- as.factor((CCDf$IUD..years.))
+levels(CCDf$IUD..years.)
+
+#STDS
+CCDf$STDs <- as.numeric(as.character(CCDf$STDs))
+CCDf$STDs[is.na(CCDf$STDs)]<- mean(CCDf$STDs, na.rm = TRUE)
+CCDf$STDs<- as.factor((CCDf$STDs))
+levels(CCDf$STDs)
+
+#STDs number
+CCDf$STDs..number. <- as.numeric(as.character(CCDf$STDs..number.))
+CCDf$STDs..number.[is.na(CCDf$STDs..number.)]<- mean(CCDf$STDs..number., na.rm = TRUE)
+CCDf$STDs..number.<- as.factor((CCDf$STDs..number.))
+levels(CCDf$STDs..number.)
+
+#STDs condylomatosis
+CCDf$STDs.condylomatosis <- as.numeric(as.character(CCDf$STDs.condylomatosis))
+CCDf$STDs.condylomatosis[is.na(CCDf$STDs.condylomatosis)]<- mean(CCDf$STDs.condylomatosis, na.rm = TRUE)
+CCDf$STDs.condylomatosis<- as.factor((CCDf$STDs.condylomatosis))
+levels(CCDf$STDs.condylomatosis)
+
+#STDs cervical condylomatosis
+CCDf$STDs.cervical.condylomatosis <- as.numeric(as.character(CCDf$STDs.cervical.condylomatosis))
+CCDf$STDs.cervical.condylomatosis[is.na(CCDf$STDs.cervical.condylomatosis)]<- mean(CCDf$STDs.cervical.condylomatosis, na.rm = TRUE)
+CCDf$STDs.cervical.condylomatosis<- as.factor((CCDf$STDs.cervical.condylomatosis))
+levels(CCDf$STDs.cervical.condylomatosis)
+
+#STDs vaginal condylomatosis
+CCDf$STDs.vaginal.condylomatosis <- as.numeric(as.character(CCDf$STDs.vaginal.condylomatosis))
+CCDf$STDs.vaginal.condylomatosis[is.na(CCDf$STDs.vaginal.condylomatosis)]<- mean(CCDf$STDs.vaginal.condylomatosis, na.rm = TRUE)
+CCDf$STDs.vaginal.condylomatosis<- as.factor((CCDf$STDs.vaginal.condylomatosis))
+levels(CCDf$STDs.vaginal.condylomatosis)
+
+#STDs vulvo perineal condylomatosis
+CCDf$STDs.vulvo.perineal.condylomatosis <- as.numeric(as.character(CCDf$STDs.vulvo.perineal.condylomatosis))
+CCDf$STDs.vulvo.perineal.condylomatosis[is.na(CCDf$STDs.vulvo.perineal.condylomatosis)]<- mean(CCDf$STDs.vulvo.perineal.condylomatosis, na.rm = TRUE)
+CCDf$STDs.vulvo.perineal.condylomatosis<- as.factor((CCDf$STDs.vulvo.perineal.condylomatosis))
+levels(CCDf$STDs.vulvo.perineal.condylomatosis)
+
+#STDs syphilis
+CCDf$STDs.syphilis <- as.numeric(as.character(CCDf$STDs.syphilis))
+CCDf$STDs.syphilis[is.na(CCDf$STDs.syphilis)]<- mean(CCDf$STDs.syphilis, na.rm = TRUE)
+CCDf$STDs.syphilis<- as.factor((CCDf$STDs.syphilis))
+levels(CCDf$STDs.syphilis)
+
+#STDs PID
+CCDf$STDs.pelvic.inflammatory.disease <- as.numeric(as.character(CCDf$STDs.pelvic.inflammatory.disease))
+CCDf$STDs.pelvic.inflammatory.disease[is.na(CCDf$STDs.pelvic.inflammatory.disease)]<- mean(CCDf$STDs.pelvic.inflammatory.disease, na.rm = TRUE)
+CCDf$STDs.pelvic.inflammatory.disease<- as.factor((CCDf$STDs.pelvic.inflammatory.disease))
+levels(CCDf$STDs.pelvic.inflammatory.disease)
+
+#STDs genital herpes
+CCDf$STDs.genital.herpes <- as.numeric(as.character(CCDf$STDs.genital.herpes))
+CCDf$STDs.genital.herpes[is.na(CCDf$STDs.genital.herpes)]<- mean(CCDf$STDs.genital.herpes, na.rm = TRUE)
+CCDf$STDs.genital.herpes <- as.factor((CCDf$STDs.genital.herpes))
+levels(CCDf$STDs.genital.herpes)
+
+#STDs molluscum contagiosum
+CCDf$STDs.molluscum.contagiosum <- as.numeric(as.character(CCDf$STDs.molluscum.contagiosum))
+CCDf$STDs.molluscum.contagiosum[is.na(CCDf$STDs.molluscum.contagiosum)]<- mean(CCDf$STDs.molluscum.contagiosum, na.rm = TRUE)
+CCDf$STDs.molluscum.contagiosum <- as.factor((CCDf$STDs.molluscum.contagiosum))
+levels(CCDf$STDs.molluscum.contagiosum)
+
+#STDs AIDS
+CCDf$STDs.AIDS <- as.numeric(as.character(CCDf$STDs.AIDS))
+CCDf$STDs.AIDS[is.na(CCDf$STDs.AIDS)]<- mean(CCDf$STDs.AIDS, na.rm = TRUE)
+CCDf$STDs.AIDS<- as.factor((CCDf$STDs.AIDS))
+levels(CCDf$STDs.AIDS)
+
+#STDs HIV
+CCDf$STDs.HIV <- as.numeric(as.character(CCDf$STDs.HIV))
+CCDf$STDs.HIV[is.na(CCDf$STDs.HIV)]<- mean(CCDf$STDs.HIV, na.rm = TRUE)
+CCDf$STDs.HIV<- as.factor((CCDf$STDs.HIV))
+levels(CCDf$STDs.HIV)
+
+#STDs Hep B
+CCDf$STDs.Hepatitis.B <- as.numeric(as.character(CCDf$STDs.Hepatitis.B))
+CCDf$STDs.Hepatitis.B[is.na(CCDf$STDs.Hepatitis.B)]<- mean(CCDf$STDs.Hepatitis.B, na.rm = TRUE)
+CCDf$STDs.Hepatitis.B<- as.factor((CCDf$STDs.Hepatitis.B))
+levels(CCDf$STDs.Hepatitis.B)
+
+#STDs HPV
+CCDf$STDs.HPV <- as.numeric(as.character(CCDf$STDs.HPV))
+CCDf$STDs.HPV[is.na(CCDf$STDs.HPV)]<- mean(CCDf$STDs.HPV, na.rm = TRUE)
+CCDf$STDs.HPV<- as.factor((CCDf$STDs.HPV))
+levels(CCDf$STDs.HPV)
+
+#STDs num diagnosis
+CCDf$STDs..Number.of.diagnosis <- as.numeric(as.character(CCDf$STDs..Number.of.diagnosis))
+CCDf$STDs..Number.of.diagnosis[is.na(CCDf$STDs..Number.of.diagnosis)]<- mean(CCDf$STDs..Number.of.diagnosis, na.rm = TRUE)
+CCDf$STDs..Number.of.diagnosis<- as.factor((CCDf$STDs..Number.of.diagnosis))
+levels(CCDf$STDs..Number.of.diagnosis)
+
+#STDs Time since first
+CCDf$STDs..Time.since.first.diagnosis <- as.numeric(as.character(CCDf$STDs..Time.since.first.diagnosis))
+CCDf$STDs..Time.since.first.diagnosis[is.na(CCDf$STDs..Time.since.first.diagnosis)]<- mean(CCDf$STDs..Time.since.first.diagnosis, na.rm = TRUE)
+CCDf$STDs..Time.since.first.diagnosis<- as.factor((CCDf$STDs..Time.since.first.diagnosis))
+levels(CCDf$STDs..Time.since.first.diagnosis)
+
+#STDS time since last
+CCDf$STDs..Time.since.last.diagnosis <- as.numeric(as.character(CCDf$STDs..Time.since.last.diagnosis))
+CCDf$STDs..Time.since.last.diagnosis[is.na(CCDf$STDs..Time.since.last.diagnosis)]<- mean(CCDf$STDs..Time.since.last.diagnosis, na.rm = TRUE)
+CCDf$STDs..Time.since.last.diagnosis<- as.factor((CCDf$STDs..Time.since.last.diagnosis))
+levels(CCDf$STDs..Time.since.last.diagnosis)
 
 #class distribution
 #there are four labels here (Hinselmann, Schiller, Citology and Biopsy) already expressed numerically as 0 or 1
@@ -1342,144 +1459,118 @@ HAPDf[!complete.cases(HAPDf),]
 
 #class distribution
 HAPDfCount <- table(HAPDf$num)
+#trestbps
+HAPDf$trestbps <- as.numeric(as.character(HAPDf$trestbps))
+HAPDf$trestbps[is.na(HAPDf$trestbps)]<- mean(HAPDf$trestbps, na.rm = TRUE)
+HAPDf$trestbps<- as.factor((HAPDf$trestbps))
+levels(HAPDf$trestbps)
+
+#fbs
+HAPDf$fbs <- as.numeric(as.character(HAPDf$fbs))
+HAPDf$fbs[is.na(HAPDf$fbs)]<- mean(HAPDf$fbs, na.rm = TRUE)
+HAPDf$fbs<- as.factor((HAPDf$fbs))
+levels(HAPDf$fbs)
+
+#restecg
+HAPDf$restecg <- as.numeric(as.character(HAPDf$restecg))
+HAPDf$restecg[is.na(HAPDf$restecg)]<- mean(HAPDf$restecg, na.rm = TRUE)
+HAPDf$restecg<- as.factor((HAPDf$restecg))
+levels(HAPDf$restecg)
+
+#exang
+HAPDf$exang <- as.numeric(as.character(HAPDf$exang))
+HAPDf$exang[is.na(HAPDf$exang)]<- mean(HAPDf$exang, na.rm = TRUE)
+HAPDf$exang<- as.factor((HAPDf$exang))
+levels(HAPDf$exang)
+
+#slope
+HAPDf$slope <- as.numeric(as.character(HAPDf$slope))
+HAPDf$slope[is.na(HAPDf$slope)]<- mean(HAPDf$slope, na.rm = TRUE)
+HAPDf$slope<- as.factor((HAPDf$slope))
+levels(HAPDf$slope)
+
+#ca
+HAPDf$ca <- as.numeric(as.character(HAPDf$ca))
+HAPDf$ca[is.na(HAPDf$ca)]<- mean(HAPDf$ca, na.rm = TRUE)
+HAPDf$ca<- as.factor((HAPDf$ca))
+levels(HAPDf$ca)
+
+#thal
+HAPDf$thal <- as.numeric(as.character(HAPDf$thal))
+HAPDf$thal[is.na(HAPDf$thal)]<- mean(HAPDf$thal, na.rm = TRUE)
+HAPDf$thal<- as.factor((HAPDf$thal))
+levels(HAPDf$thal)
+
 
 # reduce number of factors for cholesterol (there are 154)
-level4 <-as.numeric(levels(HAPDf$chol))
-level4
-#iterate through the levels
-for (i in 1:length(level4)){
-  print(level4[i])
-  if(is.na(level4[i])){
-    levels(HAPDf$chol)[i]<- "?"
-  }#end if
-  else {
-    if(level4[i]>100 & level4[i]<110){
-      print("100-110")
-        levels(HAPDf$chol)[i]<- 105
-    }
-    else if (level4[i]>=110 & level4[i]<120){
-      print("110-120")
-        levels(HAPDf$chol)[i]<- 115
-    }
-    else if(level4[i]>=120 & level4[i]<130){
-      print("120-130")
-        levels(HAPDf$chol)[i]<- 125
-    }
-    else if(level4[i]>=130 & level4[i]<140){
-      print("130-140")
-        levels(HAPDf$chol)[i] <- 135
-    }
-    else if(level4[i]>=140 & level4[i]<150){
-      print("140-150")
-        levels(HAPDf$chol)[i]<- 145
-    }
-    else if(level4[i]>=150 & level4[i]<160){
-      print("150-160")
-        levels(HAPDf$chol)[i] <- 155
-    }
-    else if(level4[i]>=160 & level4[i]<170){
-        print("160-170")
-          levels(HAPDf$chol)[i]<-165
-    }
-    else if(level4[i]>=170 & level4[i]<180){
-      print("170-180")
-        levels(HAPDf$chol)[i]<-175
-    }
-    else if(level4[i]>=180 & level4[i]<190){
-      print("190-180")
-        levels(HAPDf$chol)[i]<-185
-    }
-    else if(level4[i]>=190 & level4[i] <200){
-      print("190-200")
-        levels(HAPDf$chol)[i]<-195
-    }
-    else if(level4[i]>=200 & level4[i]<210){
-        levels(HAPDf$chol)[i]<-205
-    }
-    else if(level4[i]>=210 & level4[i]<220){
-      print("215")
-      levels(HAPDf$chol)[i]<-215
-    }
-    else if(level4[i]>=220 & level4[i]<230){
-      print("225")
-      levels(HAPDf$chol)[i]<- 225
-    }
-    else if(level4[i]>=230 & level4[i]<240){
-      print("235")
-      levels(HAPDf$chol)[i]<- 235
-    }
-    else if(level4[i]>=240 & level4[i]<250){
-      print("245")
-      levels(HAPDf$chol)[i]<- 245
-    }
-    else if(level4[i]>=250 & level4[i]<260){
-      levels(HAPDf$chol)[i]<- 255
-    }
-    else if(level4[i]>=260 & level4[i]<270){
-      print("265")
-      levels(HAPDf$chol)[i]<- 265
-    }
-    else if(level4[i]>=270 & level4[i]<280){
-      print("275")
-      levels(HAPDf$chol)[i]<- 275
-    }
-    else if(level4[i]>=280 & level4[i]<290){
-      print("285")
-      levels(HAPDf$chol)[i]<- 285
-    }
-    else if(level4[i]>=290 & level4[i]<300){
-      print("295")
-      levels(HAPDf$chol)[i]<- 295
-    }
-    else if(level4[i]>=300 & level4[i]<310){
-      print("305")
-        levels(HAPDf$chol)[i]<- 305
-    }
-    else if(level4[i]>=310 & level4[i]<320){
-      print("315")
-        levels(HAPDf$chol)[i]<- 315
-    }
-    else if(level4[i]>=320 & level4[i]<330){
-      print("325")
-        levels(HAPDf$chol)[i]<- 325
-    }
-    else if(level4[i]>=330 & level4[i]<340){
-      print("335")
-        levels(HAPDf$chol)[i]<- 335
-    }
-    else if(level4[i]>=340 & level4[i]<350){
-      print("345")
-        levels(HAPDf$chol)[i]<- 345
-    }
-    else if(level4[i]>=350 & level4[i]<360){
-      print("355")
-        levels(HAPDf$chol)[i]<- 355
-    }
-    else if(level4[i]>=360 & level4[i]<370){
-      print("365")
-        levels(HAPDf$chol)[i]<- 365
-    }
-    else if(level4[i]>=370 & level4[i]<380){
-      print("375")
-        levels(HAPDf$chol)[i]<- 375
-    }
-    else if(level4[i]>=380 & level4[i]<390){
-      print("385")
-        levels(HAPDf$chol)[i]<- 385
-    }
-    else if(level4[i]>=390 & level4[i]<400){
-      print("395")
-        levels(HAPDf$chol)[i]<- 395
-    }
-    else{
-      levels(HAPDf$chol)[i]<-level4[i]
-    }
-    
-  }#end else
- # need to check if the levels are changing appropriately 
-  print(levels(HAPDf$chol)[i])
-}
 levels(HAPDf$chol)
+levelsChol <-as.numeric(as.character(levels(HAPDf$chol)))
+sort(levelsChol, decreasing = FALSE)
+HAPDf$chol<-as.numeric(as.character(HAPDf$chol))
+#change na to mean for column
+HAPDf$chol[is.na(HAPDf$chol)]<-250.8
+HAPDf$chol[HAPDf$chol<100] <- 100
+HAPDf$chol[HAPDf$chol<175 & HAPDf$chol>=150] <- 175
+HAPDf$chol[HAPDf$chol<200 & HAPDf$chol>175]<-200
+HAPDf$chol[HAPDf$chol>200 & HAPDf$chol<225]<-225
+HAPDf$chol[HAPDf$chol>225 & HAPDf$chol<250]<-250
+HAPDf$chol[HAPDf$chol>250 & HAPDf$chol<275]<-275
+HAPDf$chol[HAPDf$chol>275 & HAPDf$chol<300]<-300
+HAPDf$chol[HAPDf$chol>300 & HAPDf$chol<325]<-325
+HAPDf$chol[HAPDf$chol>325 & HAPDf$chol<350]<-350
+HAPDf$chol[HAPDf$chol>350 & HAPDf$chol<375]<-375
+HAPDf$chol[HAPDf$chol>375 & HAPDf$chol<400]<-400
+HAPDf$chol[HAPDf$chol>425 & HAPDf$chol<450]<-450
+HAPDf$chol[HAPDf$chol>450 & HAPDf$chol<475]<-475
+HAPDf$chol[HAPDf$chol>475 & HAPDf$chol<500]<-500
+HAPDf$chol[HAPDf$chol>500 & HAPDf$chol<525]<-525
+HAPDf$chol[HAPDf$chol>525 & HAPDf$chol<550]<-550
+HAPDf$chol[HAPDf$chol>550 & HAPDf$chol<575]<-575
+HAPDf$chol[HAPDf$chol>575 & HAPDf$chol<600]<-600
+
+HAPDf$chol<-as.factor(HAPDf$chol)
+levels(HAPDf$chol)
+
+#reduce number of levels for thalach (there are 72)
+levels(HAPDf$thalach)
+HAPDf$thalach <- as.numeric(as.character(HAPDf$thalach))
+#replace na by mean for column
+HAPDf$thalach[is.na(HAPDf$thalach)]<- 139.1
+HAPDf$thalach[HAPDf$thalach<=90]<-90
+HAPDf$thalach[HAPDf$thalach >90 & HAPDf$thalach<=95]<-95
+HAPDf$thalach[HAPDf$thalach >95 & HAPDf$thalach<=100]<-100
+HAPDf$thalach[HAPDf$thalach >100 & HAPDf$thalach<=105]<-105
+HAPDf$thalach[HAPDf$thalach >105 & HAPDf$thalach<=110]<-110
+HAPDf$thalach[HAPDf$thalach >110 & HAPDf$thalach<=115]<-115
+HAPDf$thalach[HAPDf$thalach >115 & HAPDf$thalach<=120]<-120
+HAPDf$thalach[HAPDf$thalach >120 & HAPDf$thalach<=125]<-125
+HAPDf$thalach[HAPDf$thalach >125 & HAPDf$thalach<=130]<-130
+HAPDf$thalach[HAPDf$thalach >130 & HAPDf$thalach<=135]<-135
+HAPDf$thalach[HAPDf$thalach >135 & HAPDf$thalach<=140]<-140
+HAPDf$thalach[HAPDf$thalach >140 & HAPDf$thalach<=145]<-145
+HAPDf$thalach[HAPDf$thalach >145 & HAPDf$thalach<=150]<-150
+HAPDf$thalach[HAPDf$thalach >150 & HAPDf$thalach<=155]<-155
+HAPDf$thalach[HAPDf$thalach >155 & HAPDf$thalach<=160]<-160
+HAPDf$thalach[HAPDf$thalach >160 & HAPDf$thalach<=165]<-165
+HAPDf$thalach[HAPDf$thalach >165 & HAPDf$thalach<=170]<-170
+HAPDf$thalach[HAPDf$thalach >170 & HAPDf$thalach<=175]<-175
+HAPDf$thalach[HAPDf$thalach >175 & HAPDf$thalach<=180]<-180
+HAPDf$thalach[HAPDf$thalach >180 & HAPDf$thalach<=185]<-185
+HAPDf$thalach[HAPDf$thalach >185 & HAPDf$thalach<=190]<-190
+
+HAPDf$thalach <- as.factor(HAPDf$thalach)
+
+levels(HAPDf$thalach)
+
+
+
+
+
+
+
+
+
+
 
 
 #data visualisation
@@ -1729,6 +1820,8 @@ las=1)
 ```
 
 ```{r Autism screening}
+AuSDf <- read.csv(file = "Datasets/Autism_data.csv", header = TRUE, sep= ",")
+
 cat("Shape of AuSDf is: ", dim(AuSDf))
 head(AuSDf)
 summary(AuSDf)
