@@ -1826,6 +1826,7 @@ cat("Shape of AuSDf is: ", dim(AuSDf))
 head(AuSDf)
 summary(AuSDf)
 colnames(AuSDf)
+str(AuSDf)
 
 #notes on column
 #the "autism" column (column 15) refers to whether or not a family member has PDD or not
@@ -1840,16 +1841,21 @@ levels(AuSDf$Class.ASD)
 
 
 #identify all the levels for the columns that are factors
+#replace na for age column
 levels(AuSDf$age)
-levels(AuSDf$gender)
+AuSDf$age<- as.numeric(as.character(AuSDf$age))
+AuSDf$age[is.na(AuSDf$age)]<- mean(AuSDf$age, na.rm = TRUE)
+AuSDf$age<- as.factor((AuSDf$age))
+levels(AuSDf$age)
+#replace na for ethinicity
 levels(AuSDf$ethnicity)
-levels(AuSDf$jundice)
-levels(AuSDf$autism)
-levels(AuSDf$contry_of_res)
-levels(AuSDf$used_app_before)
-levels(AuSDf$age_desc)
-levels(AuSDf$relation)
+levels(AuSDf$ethnicity)[1]<- "unknown"
+levels(AuSDf$ethnicity)
 
+#replace na for relation
+levels(AuSDf$relation)
+levels(AuSDf$relation)[1]<- "unknown"
+levels(AuSDf$relation)
 AuSDf[!complete.cases(AuSDf),]
 levels(AuSDf$contry_of_res)
 #there are 65 possible country of residence, RF only supports up to 53
@@ -1879,6 +1885,9 @@ AuSDfCount <- table(AuSDf$Class.ASD)
 ```
 
 ```{r Fertility Dataset}
+
+FertDf <- read.csv(file = "Datasets/fertility.csv", header = TRUE, sep =",")
+
 cat("Shape of FertDf is: ", dim(FertDf))
 head(FertDf)
 summary(FertDf)
