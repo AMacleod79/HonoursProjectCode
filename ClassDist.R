@@ -55,7 +55,56 @@ minPercAus <- AuSDfCount[[2]]
 majPercFert <- FertDfCount[[2]]
 minPercFert <- FertDfCount[[1]]
 
-classDist <- data.frame("Categories" =c("Majority Class","Minority Class"),
+classDist <- data.frame("Dataset" =c("Breast_Cancer",
+                                                              "Breast_Cancer",
+                                                              "Liver_Disease",
+                                                              "Liver_Disease",
+                                                              "Alzheimer",
+                                                              "Alzheimer",
+                                                              "Diabetes",
+                                                              "Diabetes",
+                                                              "Cervical_Cancer",
+                                                              "Cervical_Cancer",
+                                                              "Lower_Back_Pain",
+                                                              "Lower_Back_Pain",
+                                                              "Heart_Attack",
+                                                              "Heart_Attack",
+                                                              "Autism",
+                                                              "Autism",
+                                                              "Fertility",
+                                                              "Fertility"
+),
+"Percentage" =c(numRowMinBC,
+                numMaxRowBC,
+                numMinRowLiver,
+                numMaxRowLiver,
+                numMinRowAlz,
+                numMaxRowAlz,
+                numMinRowDiab,
+                numMaxRowDiab,
+                numMinRowCC,
+                numMaxRowCC,
+                numMinLBP,
+                numMaxLBP,
+                numMinHA,
+                numMaxHA,
+                numRowMinAu,
+                numRowMaxAu,
+                numRowMinFert,
+                numRowMaxFert
+),
+"Category" = c("Minority Class", "Majority Class",
+               "Minority Class", "Majority Class",
+               "Minority Class", "Majority Class",
+               "Minority Class", "Majority Class",
+               "Minority Class", "Majority Class",
+               "Minority Class", "Majority Class",
+               "Minority Class", "Majority Class",
+               "Minority Class", "Majority Class",
+               "Minority Class", "Majority Class")
+)
+
+classDist2 <- data.frame("Categories" =c("Majority Class","Minority Class"),
                          "Cervical Cancer" = c(majPercCC, minPercCC),
                          "Breast_Cancer" = c(majPercBC, minPercBC),
                          "Liver_Disease" = c(majPercLiver, minPercLiver),
@@ -66,9 +115,9 @@ classDist <- data.frame("Categories" =c("Majority Class","Minority Class"),
                          "Heart_Attack(modified)" = c(majPercHAm,minPercHAm),
                          "Autism" = c(majPercAus, minPercAus),
                          "Fertility" = c(majPercFert,minPercFert))
-str(classDist)
+str(classDist2)
 
-write.csv(classDist, file = "Figures/ClassDistribution.csv")
+write.csv(classDist2, file = "Figures/ClassDistribution.csv")
 x <- read.csv('Figures/ClassDistribution.csv')
 x$X = NULL
 library(xtable)
