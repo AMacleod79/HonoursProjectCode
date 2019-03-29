@@ -1,7 +1,7 @@
 # this script to upload and preprocess data for the Autism dataset
 
 #packages
-install.packages("RColorBrewer")
+#install.packages("RColorBrewer")
 
 #library
 library("RColorBrewer")
@@ -51,11 +51,51 @@ levels(AuSDf$relation)[1]<- "unknown"
 levels(AuSDf$relation)
 AuSDf[!complete.cases(AuSDf),]
 #too many levels in countries column
-#there are 65 possible country of residence, RF only supports up to 53
+#there are 67 possible country of residence, RF only supports up to 53
 #consider that country of residence may not have an impact on autism diagnostic and drop the column?
 #drop the contry of residence in train and test
 #or convert to string 
 # returns an error (see unusued code at bottom of notebook)
+
+autPos <- AuSDf[AuSDf$Class.ASD==1,]
+autNeg <- AuSDf[AuSDf$Class.ASD==0,]
+countries <- levels(AuSDf$contry_of_res)
+countryDist <- data.frame(Country=as.character(),
+                          CountryCode = as.numeric(),
+                          Pos = as.numeric(),
+                          PosPerc =as.numeric(),
+                          Neg = as.numeric(),
+                          NegPerc = as.numeric(),
+                          TotalSample = as.numeric())
+for(i in 1:length(countries)){
+  country <- countries[[i]]
+  countryCode <- i
+  pos <- nrow(autPos[autPos$contry_of_res==countries[[i]],])
+  posPerc <- nrow(autPos[autPos$contry_of_res==countries[[i]],])*100/nrow(AuSDf[AuSDf$contry_of_res==countries[[i]],])
+  neg <- nrow(autNeg[autNeg$contry_of_res==countries[[i]],])
+  negPerc <- nrow(autNeg[autNeg$contry_of_res==countries[[i]],])*100/nrow(AuSDf[AuSDf$contry_of_res==countries[[i]],])
+  total <- nrow(AuSDf[AuSDf$contry_of_res==countries[[i]],])
+  countryDist <- rbind(countryDist, data.frame(Country = countries[[i]],
+                                               CountryCode = countryCode,
+                                               Pos = pos,
+                                               PosPerc = posPerc,
+                                               Neg = neg,
+                                               NegPerc = negPerc,
+                                               TotalSample = total))
+                  
+}
+countryDist
+subCountryDist <- countryDist[countryDist$TotalSample>=5,]
+library(ggplot2)
+ggplot(data=countryDist, aes(x=countryDist$CountryCode, y=countryDist$PosPerc)) +
+  geom_bar(stat="identity")
+ggsave("Figures/figure4.2c.png",  width = 16, height = 10, dpi = 160)
+
+ggplot(data=countryDist, aes(x=countryDist$CountryCode, y=countryDist$TotalSample)) +
+  geom_bar(stat = "identity")
+ggsave("Figures/figure4.2b.png",  width = 16, height = 10, dpi = 160)
+
+##
 
 AuSDf<-subset(AuSDf,select=c(- contry_of_res))
 
