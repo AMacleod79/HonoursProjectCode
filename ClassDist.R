@@ -1,6 +1,6 @@
 #script to create a graph showing the class distribution for all datasets
 #add access to the EDA scripts to get to the class distribution tables
-
+#install.packages("RColorBrewer")
 setwd("/Users/annabelle/Documents/HonoursYear/HonoursProject/HonoursProjectCode")
 source("EDA/FertilityEDA.R")
 source("EDA/HeartAttackEDA.R")
@@ -32,8 +32,8 @@ majPercDiabetes <- DiabetesDfCount[[1]]
 minPercDiabetes <- DiabetesDfCount[[2]]
 
 #percentage class distribution low back pain
-majPercLBP <- LBPDfCount[[2]]
-minPercLBP <- LBPDfCount[[1]]
+majPercLBP <- LBPDfCountb[[2]]
+minPercLBP <- LBPDfCountb[[1]]
 
 #percentage class distribution low back pain (modified)
 majPercLBPm <- totalLBPCount[[2]]
@@ -55,67 +55,92 @@ minPercAus <- AuSDfCount[[2]]
 majPercFert <- FertDfCount[[2]]
 minPercFert <- FertDfCount[[1]]
 
-classDist <- data.frame("Dataset" =c("Breast_Cancer",
-                                                              "Breast_Cancer",
-                                                              "Liver_Disease",
-                                                              "Liver_Disease",
-                                                              "Alzheimer",
-                                                              "Alzheimer",
-                                                              "Diabetes",
-                                                              "Diabetes",
-                                                              "Cervical_Cancer",
-                                                              "Cervical_Cancer",
-                                                              "Lower_Back_Pain",
-                                                              "Lower_Back_Pain",
-                                                              "Heart_Attack",
-                                                              "Heart_Attack",
-                                                              "Autism",
-                                                              "Autism",
-                                                              "Fertility",
-                                                              "Fertility"
-),
-"Percentage" =c(numRowMinBC,
-                numMaxRowBC,
-                numMinRowLiver,
-                numMaxRowLiver,
-                numMinRowAlz,
-                numMaxRowAlz,
-                numMinRowDiab,
-                numMaxRowDiab,
-                numMinRowCC,
-                numMaxRowCC,
-                numMinLBP,
-                numMaxLBP,
-                numMinHA,
-                numMaxHA,
-                numRowMinAu,
-                numRowMaxAu,
-                numRowMinFert,
-                numRowMaxFert
-),
-"Category" = c("Minority Class", "Majority Class",
-               "Minority Class", "Majority Class",
-               "Minority Class", "Majority Class",
-               "Minority Class", "Majority Class",
-               "Minority Class", "Majority Class",
-               "Minority Class", "Majority Class",
-               "Minority Class", "Majority Class",
-               "Minority Class", "Majority Class",
-               "Minority Class", "Majority Class")
-)
+classDist <- data.frame("Dataset" =c("Cervical Cancer",
+                                      "Cervical Cancer",
+                                      "Breast Cancer",
+                                      "Breast Cancer",
+                                      "Liver Disease",
+                                      "Liver Disease",
+                                      "Diabetes",
+                                      "Diabetes",
+                                      "Lower Back_Pain",
+                                      "Lower Back_Pain",
+                                      "Lower Back_Pain modified",
+                                      "Lower Back_Pain modified",
+                                      "Heart Attack",
+                                      "Heart Attack",
+                                      "Heart Attack modified",
+                                      "Heart Attack modified",
+                                      "Autism",
+                                      "Autism",
+                                      "Fertility",
+                                      "Fertility"),
+                          "Percentage" =c(majPercCC,
+                                          minPercCC,
+                                          majPercBC,
+                                          minPercBC,
+                                          majPercLiver,
+                                          minPercLiver,
+                                          majPercDiabetes,
+                                          minPercDiabetes,
+                                          majPercLBP,
+                                          minPercLBP,
+                                          majPercLBPm,
+                                          minPercLBPm,
+                                          majPercHA,
+                                          minPercHA,
+                                          majPercHAm,
+                                          minPercHAm,
+                                          majPercAus,
+                                          minPercAus,
+                                          majPercFert,
+                                          minPercFert),
+                          "Category" = c("Majority Class","Minority Class",
+                                        "Majority Class","Minority Class",
+                                        "Majority Class","Minority Class",
+                                        "Majority Class","Minority Class",
+                                        "Majority Class","Minority Class",
+                                        "Majority Class","Minority Class",
+                                        "Majority Class","Minority Class",
+                                        "Majority Class","Minority Class",
+                                        "Majority Class","Minority Class",
+                                        "Majority Class","Minority Class"))
 
-classDist2 <- data.frame("Categories" =c("Majority Class","Minority Class"),
-                         "Cervical Cancer" = c(majPercCC, minPercCC),
-                         "Breast_Cancer" = c(majPercBC, minPercBC),
-                         "Liver_Disease" = c(majPercLiver, minPercLiver),
-                         "Diabetes" = c(majPercDiabetes,minPercDiabetes),
-                         "Lower_Back_Pain" = c(majPercLBP,minPercLBP), 
-                         "Lower_Back_Pain(modified)" = c(majPercLBPm, minPercLBPm),
-                         "Heart_Attack" = c(majPercHA,minPercHA),
-                         "Heart_Attack(modified)" = c(majPercHAm,minPercHAm),
-                         "Autism" = c(majPercAus, minPercAus),
-                         "Fertility" = c(majPercFert,minPercFert))
+classDist2 <- data.frame("Datasets" = c("Cervical_Cancer",
+                                        "Breast_Cancer",
+                                        "Liver_Disease",
+                                        "Diabetes",
+                                        "Lower_Back_Pain",
+                                        "Lower_Back_Pain modified",
+                                        "Heart_Attack",
+                                        "Heart_Attack modified",
+                                        "Autism",
+                                        "Fertility"),
+                        "Majority Class"=c(majPercCC,
+                                           majPercBC, 
+                                           majPercLiver, 
+                                           majPercDiabetes,
+                                           majPercLBP,
+                                           majPercLBPm, 
+                                           majPercHA,
+                                           majPercHAm,
+                                           majPercAus, 
+                                           majPercFert),
+                        "Minority Class" = c(minPercCC,
+                                             minPercBC,
+                                             minPercLiver,
+                                             minPercDiabetes,
+                                             minPercLBP,
+                                             minPercLBPm,
+                                             minPercHA,
+                                             minPercHAm,
+                                             minPercAus,
+                                             minPercFert))
 str(classDist2)
+
+library(stringr)
+classDist$wrappedData = str_wrap(classDist$Dataset, width = 1)
+
 
 write.csv(classDist2, file = "Figures/ClassDistribution.csv")
 x <- read.csv('Figures/ClassDistribution.csv')
@@ -126,9 +151,12 @@ print(xtable(x),include.rownames = FALSE)
 
 #import ggplot2
 library(ggplot2)
+
+install.packages("wesanderson")
+library(wesanderson)
 # Use position=position_dodge()
 # need to adjust size
 #png("Figure 4.2.png")
-ggplot(data=classDist, aes(x=Dataset, y=Percentage, fill=Category )) +
-  geom_bar(stat="identity", position = position_dodge())
-ggsave("Figures/figure4_1b.png",  width = 16, height = 10, dpi = 160)
+ggplot(data=classDist, aes(x=wrappedData, y=Percentage, fill=Category )) +
+  geom_bar(stat="identity", position = position_dodge()) + scale_fill_manual(values = wes_palette(n=3, name = "GrandBudapest1")) + xlab("Datasets") + ylab("Percentage")
+ggsave("Figures/figure4_1b.png",  width = 9, height = 5, dpi = 300)
